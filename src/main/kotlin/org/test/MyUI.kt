@@ -31,6 +31,7 @@ class MyUI : UI() {
         private val log = LoggerFactory.getLogger(MyUI::class.java)
     }
 
+    @Transient
     private lateinit var job: Job
 
     @Override
@@ -49,6 +50,8 @@ class MyUI : UI() {
                     if (confirmDialog()) {
                         println(getGoogleCom())
                         Notification.show("Done!")
+                    } else {
+                        throw RuntimeException("Unheard of!")
                     }
                 }
             })

@@ -6,10 +6,7 @@ import com.github.vok.karibudsl.label
 import com.github.vok.karibudsl.verticalLayout
 import com.vaadin.ui.UI
 import com.vaadin.ui.Window
-import kotlinx.coroutines.experimental.CancellableContinuation
-import kotlinx.coroutines.experimental.CoroutineDispatcher
-import kotlinx.coroutines.experimental.CoroutineExceptionHandler
-import kotlinx.coroutines.experimental.suspendCancellableCoroutine
+import kotlinx.coroutines.experimental.*
 import org.asynchttpclient.AsyncCompletionHandler
 import org.asynchttpclient.BoundRequestBuilder
 import org.asynchttpclient.DefaultAsyncHttpClient
@@ -110,6 +107,11 @@ private data class VaadinExceptionHandler(val ui: UI) : CoroutineExceptionHandle
         get() = CoroutineExceptionHandler
 
     override fun handleException(context: CoroutineContext, exception: Throwable) {
+        // ignore CancellationException (they are normal means to terminate a coroutine)
+        if (exception is CancellationException) return
+        // try cancel job in the context
+        context[Job]?.cancel(exception)
+        // send the exception to Vaadin
         ui.access { throw exception }
     }
 }
