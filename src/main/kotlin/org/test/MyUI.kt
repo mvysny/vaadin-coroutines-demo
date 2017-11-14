@@ -1,20 +1,24 @@
 package org.test
 
 import com.github.vok.karibudsl.button
-import com.github.vok.karibudsl.textField
 import com.github.vok.karibudsl.verticalLayout
 import com.vaadin.annotations.Push
-import javax.servlet.annotation.WebServlet
-
 import com.vaadin.annotations.Theme
 import com.vaadin.annotations.VaadinServletConfiguration
-import com.vaadin.server.*
+import com.vaadin.server.ErrorHandler
+import com.vaadin.server.Page
+import com.vaadin.server.VaadinRequest
+import com.vaadin.server.VaadinServlet
 import com.vaadin.shared.Position
 import com.vaadin.ui.Notification
 import com.vaadin.ui.UI
+import com.vaadin.ui.themes.ValoTheme
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.launch
 import org.slf4j.LoggerFactory
+import javax.servlet.annotation.WebServlet
+import javax.ws.rs.ApplicationPath
+import javax.ws.rs.core.Application
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window
@@ -40,22 +44,31 @@ class MyUI : UI() {
             log.error("UI error", event.throwable)
             Notification("Internal error", "Sorry! ${event.throwable}", Notification.Type.ERROR_MESSAGE).apply {
                 position = Position.TOP_CENTER
-                show(Page.getCurrent())
+                show(page)
             }
         }
         verticalLayout {
-            button("Click Me", {
+            button("Cancel Reservation", {
                 job = launch(vaadin()) {
-                    println(getGoogleCom())
-                    if (confirmDialog()) {
-                        println(getGoogleCom())
-                        Notification.show("Done!")
+                    val isReservationValid = isReservationValid()
+                    if (!isReservationValid) {
+                        Notification.show("Not valid anymore")
                     } else {
-                        throw RuntimeException("Unheard of!")
+                        if (confirmDialog("The reservation is still valid. Do you really wish to cancel?")) {
+                            cancelReservation()
+                            Notification(null, "The reservation has been canceled", Notification.Type.HUMANIZED_MESSAGE).apply {
+                                position = Position.MIDDLE_CENTER
+                                styleName = "${ValoTheme.NOTIFICATION_SUCCESS} ${ValoTheme.NOTIFICATION_CLOSABLE}"
+                                this.delayMsec = -1
+                                show(Page.getCurrent())
+                            }
+                        } else {
+                            throw RuntimeException("Unimplemented ;)")
+                        }
                     }
                 }
             })
-            button("Cancel", { job.cancel() })
+            button("Cancel The Cancelation Job", { job.cancel() })
         }
     }
 }
@@ -63,3 +76,6 @@ class MyUI : UI() {
 @WebServlet(urlPatterns = arrayOf("/*"), name = "MyUIServlet", asyncSupported = true)
 @VaadinServletConfiguration(ui = MyUI::class, productionMode = false)
 class MyUIServlet : VaadinServlet()
+
+@ApplicationPath("/rest")
+class ApplicationConfig : Application()
