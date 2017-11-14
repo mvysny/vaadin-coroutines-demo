@@ -1,40 +1,12 @@
 package org.test
 
-import com.github.vok.karibudsl.*
-import com.vaadin.ui.Alignment
 import com.vaadin.ui.UI
-import com.vaadin.ui.Window
 import kotlinx.coroutines.experimental.*
 import org.asynchttpclient.AsyncCompletionHandler
 import org.asynchttpclient.BoundRequestBuilder
 import org.asynchttpclient.DefaultAsyncHttpClient
 import org.asynchttpclient.Response
 import kotlin.coroutines.experimental.CoroutineContext
-
-/**
- * A simple confirmation dialog.
- * @property response invoked with the user's response: true if the user pressed yes, false if the user pressed no or closed the dialog.
- */
-class ConfirmDialog(message: String, private val response: (confirmed: Boolean) -> Unit) : Window() {
-    init {
-        caption = "Confirm"; center(); isResizable = true; isModal = false
-        val registration = addCloseListener({ _ -> response(false) })
-        verticalLayout {
-            label(message)
-            horizontalLayout {
-                alignment = Alignment.MIDDLE_RIGHT
-                button("Yes", { registration.remove(); close(); response(true) }) {
-                    setPrimary()
-                }
-                button("No", { registration.remove(); close(); response(false) })
-            }
-        }
-    }
-
-    fun show() {
-        UI.getCurrent().addWindow(this)
-    }
-}
 
 fun checkUIThread() {
     require(UI.getCurrent() != null) { "Not running in Vaadin UI thread" }
@@ -67,7 +39,8 @@ suspend fun BoundRequestBuilder.async(): String =
 
 object RestClient {
     /**
-     * Checks whether there are still tickets available. See [TicketsRest] for the server dummy implementation.
+     * Checks whether there are still tickets available. Suspends until the response is available, then returns it.
+     * See [TicketsRest] for the server dummy implementation.
      */
     suspend fun getNumberOfAvailableTickets(): Int {
         val response = DefaultAsyncHttpClient().prepareGet("http://localhost:8080/rest/tickets/available").async()
@@ -80,20 +53,6 @@ object RestClient {
      */
     suspend fun buyTicket() {
         DefaultAsyncHttpClient().preparePost("http://localhost:8080/rest/tickets/purchase").async()
-    }
-}
-
-/**
- * Opens a confirmation dialog and suspends; resumes when the dialog is closed or a button is clicked inside of the dialog.
- * Supports cancelation - closes the dialog automatically.
- * @return true if the user pressed yes, false if the user pressed no or closed the dialog.
- */
-suspend fun confirmDialog(message: String = "Are you sure?"): Boolean {
-    return suspendCancellableCoroutine { cont: CancellableContinuation<Boolean> ->
-        checkUIThread()
-        val dlg = ConfirmDialog(message, { response -> cont.resume(response) })
-        dlg.show()
-        cont.invokeOnCompletion { checkUIThread(); dlg.close() }
     }
 }
 
