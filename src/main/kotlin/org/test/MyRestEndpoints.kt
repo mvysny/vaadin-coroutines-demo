@@ -9,23 +9,23 @@ import javax.ws.rs.core.MediaType
 /**
  * Provides access to person list. To test, just run `curl http://localhost:8080/rest/person`
  */
-@Path("/reservations")
-class ReservationsRest {
+@Path("/tickets")
+class TicketsRest {
     @GET()
-    @Path("/status")
+    @Path("/available")
     @Produces(MediaType.TEXT_PLAIN)
-    fun isValid(): String {
+    fun free(): String {
         Thread.sleep(1000) // simulate delay
-        return "valid"
+        return "25"
     }
 
     @POST()
-    @Path("/cancel")
+    @Path("/purchase")
     fun cancel() {
         Thread.sleep(3000) // simulate delay
         println("""
             ===================
-            CANCELED
+            PURCHASED
             ===================
         """.trimIndent())
     }

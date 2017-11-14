@@ -48,27 +48,45 @@ class MyUI : UI() {
             }
         }
         verticalLayout {
-            button("Cancel Reservation", {
-                job = launch(vaadin()) {
-                    val isReservationValid = withProgressDialog("Checking Reservation State, Please Wait") { isReservationValid() }
-                    if (!isReservationValid) {
-                        Notification.show("Not valid anymore")
-                    } else {
-                        if (confirmDialog("The reservation is still valid. Do you really wish to cancel?")) {
-                            withProgressDialog("Canceling Reservation, Please Wait") { cancelReservation() }
-                            confirmInfoBox("The reservation has been canceled")
-                        } else {
-                            throw RuntimeException("Unimplemented ;)")
-                        }
-                    }
-                }
+            button("Buy Ticket", {
+                job = purchaseTicket()
             })
-            button("Cancel The Cancelation Job", { job.cancel() })
+            button("Cancel Purchase", { job.cancel() })
+        }
+    }
+
+    /**
+     * Starts the ticket purchase asynchronously.
+     * @return cancelable ongoing job
+     */
+    private fun purchaseTicket(): Job = launch(vaadin()) {
+        // query the server for the number of available tickets. Wrap the long-running REST call in a nice progress dialog.
+        val availableTickets = withProgressDialog("Checking Available Tickets, Please Wait") {
+            RestClient.getNumberOfAvailableTickets()
+        }
+
+        if (availableTickets <= 0) {
+            Notification.show("No tickets available")
+        } else {
+
+            // there seem to be tickets available. Ask the user for confirmation.
+            if (confirmDialog("There are $availableTickets available tickets. Would you like to purchase one?")) {
+
+                // let's go ahead and purchase a ticket. Wrap the long-running REST call in a nice progress dialog.
+                withProgressDialog("Purchasing") { RestClient.buyTicket() }
+
+                // show an info box that the purchase has been completed
+                confirmationInfoBox("The ticket has been purchased, thank you!")
+            } else {
+
+                // demonstrates the proper exception handling.
+                throw RuntimeException("Unimplemented ;)")
+            }
         }
     }
 }
 
-private fun confirmInfoBox(msg: String) {
+private fun confirmationInfoBox(msg: String) {
     Notification(null, msg, Notification.Type.HUMANIZED_MESSAGE).apply {
         position = Position.MIDDLE_CENTER
         styleName = "${ValoTheme.NOTIFICATION_SUCCESS} ${ValoTheme.NOTIFICATION_CLOSABLE}"

@@ -19,6 +19,7 @@ inline fun <T> withProgressDialog(message: String, block: ()->T): T {
  */
 class ProgressDialog(message: String) : Window() {
     init {
+        // the dialog is not modal on purpose, so that you can try the "Cancel" button.
         center(); isResizable = false; isModal = false; isClosable = false
         horizontalLayout {
             isMargin = true

@@ -1,9 +1,7 @@
 package org.test
 
-import com.github.vok.karibudsl.button
-import com.github.vok.karibudsl.horizontalLayout
-import com.github.vok.karibudsl.label
-import com.github.vok.karibudsl.verticalLayout
+import com.github.vok.karibudsl.*
+import com.vaadin.ui.Alignment
 import com.vaadin.ui.UI
 import com.vaadin.ui.Window
 import kotlinx.coroutines.experimental.*
@@ -24,7 +22,10 @@ class ConfirmDialog(message: String, private val response: (confirmed: Boolean) 
         verticalLayout {
             label(message)
             horizontalLayout {
-                button("Yes", { registration.remove(); close(); response(true) })
+                alignment = Alignment.MIDDLE_RIGHT
+                button("Yes", { registration.remove(); close(); response(true) }) {
+                    setPrimary()
+                }
                 button("No", { registration.remove(); close(); response(false) })
             }
         }
@@ -64,20 +65,22 @@ suspend fun BoundRequestBuilder.async(): String =
         cont.invokeOnCompletion { if (!f.isDone) f.cancel(true) }
     }
 
-/**
- * Checks whether a reservation is still valid. See [ReservationsRest] for the server dummy implementation.
- */
-suspend fun isReservationValid(): Boolean {
-    val response = DefaultAsyncHttpClient().prepareGet("http://localhost:8080/rest/reservations/status").async()
-    return response == "valid"
-}
+object RestClient {
+    /**
+     * Checks whether there are still tickets available. See [TicketsRest] for the server dummy implementation.
+     */
+    suspend fun getNumberOfAvailableTickets(): Int {
+        val response = DefaultAsyncHttpClient().prepareGet("http://localhost:8080/rest/tickets/available").async()
+        return response.toInt()
+    }
 
-/**
- * Cancels the reservation. NOTE: canceling this function won't cancel the request and thus the request processing will proceed
- * irrespective of this job being canceled.
- */
-suspend fun cancelReservation() {
-    DefaultAsyncHttpClient().preparePost("http://localhost:8080/rest/reservations/cancel").async()
+    /**
+     * Buys a ticket. NOTE: canceling the job running this function won't cancel the request and thus the request processing will proceed
+     * irrespective of this job being canceled.
+     */
+    suspend fun buyTicket() {
+        DefaultAsyncHttpClient().preparePost("http://localhost:8080/rest/tickets/purchase").async()
+    }
 }
 
 /**
