@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/mvysny/vaadin-coroutine-demo.svg?branch=master)](https://travis-ci.org/mvysny/vaadin-coroutine-demo)
+[![Build Status](https://travis-ci.org/mvysny/vaadin-coroutines-demo.svg?branch=master)](https://travis-ci.org/mvysny/vaadin-coroutines-demo)
 
 # Vaadin Coroutine Demo
 
