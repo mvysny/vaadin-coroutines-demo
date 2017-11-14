@@ -1,7 +1,6 @@
 package org.test
 
 import com.github.vok.karibudsl.button
-import com.github.vok.karibudsl.label
 import com.github.vok.karibudsl.textField
 import com.github.vok.karibudsl.verticalLayout
 import com.vaadin.annotations.Push
@@ -13,7 +12,6 @@ import com.vaadin.server.VaadinRequest
 import com.vaadin.server.VaadinServlet
 import com.vaadin.ui.Notification
 import com.vaadin.ui.UI
-import com.vaadin.ui.VerticalLayout
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.launch
 
@@ -38,9 +36,9 @@ class MyUI : UI() {
             }
             button("Click Me", {
                 job = launch(Vaadin()) {
-                    println(bla())
+                    println(getGoogleCom())
                     if (confirmDialog()) {
-                        println(bla())
+                        println(getGoogleCom())
                         Notification.show("Done!")
                     }
                 }
