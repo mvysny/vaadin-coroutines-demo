@@ -8,12 +8,13 @@ import javax.servlet.annotation.WebServlet
 
 import com.vaadin.annotations.Theme
 import com.vaadin.annotations.VaadinServletConfiguration
-import com.vaadin.server.VaadinRequest
-import com.vaadin.server.VaadinServlet
+import com.vaadin.server.*
+import com.vaadin.shared.Position
 import com.vaadin.ui.Notification
 import com.vaadin.ui.UI
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.launch
+import org.slf4j.LoggerFactory
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window
@@ -26,16 +27,24 @@ import kotlinx.coroutines.experimental.launch
 @Push
 class MyUI : UI() {
 
+    companion object {
+        private val log = LoggerFactory.getLogger(MyUI::class.java)
+    }
+
     private lateinit var job: Job
 
     @Override
     override fun init(vaadinRequest: VaadinRequest?) {
-        verticalLayout {
-            val name = textField {
-                caption = "Type your name here:"
+        errorHandler = ErrorHandler { event ->
+            log.error("UI error", event.throwable)
+            Notification("Internal error", "Sorry! ${event.throwable}", Notification.Type.ERROR_MESSAGE).apply {
+                position = Position.TOP_CENTER
+                show(Page.getCurrent())
             }
+        }
+        verticalLayout {
             button("Click Me", {
-                job = launch(Vaadin()) {
+                job = launch(vaadin()) {
                     println(getGoogleCom())
                     if (confirmDialog()) {
                         println(getGoogleCom())

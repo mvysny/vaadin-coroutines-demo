@@ -8,6 +8,7 @@ import com.vaadin.ui.UI
 import com.vaadin.ui.Window
 import kotlinx.coroutines.experimental.CancellableContinuation
 import kotlinx.coroutines.experimental.CoroutineDispatcher
+import kotlinx.coroutines.experimental.CoroutineExceptionHandler
 import kotlinx.coroutines.experimental.suspendCancellableCoroutine
 import org.asynchttpclient.AsyncCompletionHandler
 import org.asynchttpclient.BoundRequestBuilder
@@ -94,8 +95,26 @@ suspend fun confirmDialog(): Boolean {
  * Implements [CoroutineDispatcher] on top of Vaadin [UI] and makes sure that all coroutine code runs in the UI thread.
  * Actions done in the UI thread are then automatically pushed by Vaadin Push to the browser.
  */
-data class Vaadin(val ui: UI = UI.getCurrent()) : CoroutineDispatcher() {
+private data class VaadinDispatcher(val ui: UI) : CoroutineDispatcher() {
     override fun dispatch(context: CoroutineContext, block: Runnable) {
         ui.access(block)
     }
 }
+
+/**
+ * If the coroutine fails, redirect the exception to the Vaadin Error Handler (the [UI.errorHandler] if specified; if not,
+ * Vaadin will just log the exception).
+ */
+private data class VaadinExceptionHandler(val ui: UI) : CoroutineExceptionHandler {
+    override val key: CoroutineContext.Key<*>
+        get() = CoroutineExceptionHandler
+
+    override fun handleException(context: CoroutineContext, exception: Throwable) {
+        ui.access { throw exception }
+    }
+}
+
+/**
+ * Provides the Vaadin Coroutine context for given [ui] (or the current one if none specified).
+ */
+fun vaadin(ui: UI = UI.getCurrent()) = VaadinDispatcher(ui) + VaadinExceptionHandler(ui)
