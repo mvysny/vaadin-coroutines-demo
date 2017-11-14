@@ -72,6 +72,10 @@ suspend fun isReservationValid(): Boolean {
     return response == "valid"
 }
 
+/**
+ * Cancels the reservation. NOTE: canceling this function won't cancel the request and thus the request processing will proceed
+ * irrespective of this job being canceled.
+ */
 suspend fun cancelReservation() {
     DefaultAsyncHttpClient().preparePost("http://localhost:8080/rest/reservations/cancel").async()
 }

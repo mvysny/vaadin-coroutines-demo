@@ -50,18 +50,13 @@ class MyUI : UI() {
         verticalLayout {
             button("Cancel Reservation", {
                 job = launch(vaadin()) {
-                    val isReservationValid = isReservationValid()
+                    val isReservationValid = withProgressDialog("Checking Reservation State, Please Wait") { isReservationValid() }
                     if (!isReservationValid) {
                         Notification.show("Not valid anymore")
                     } else {
                         if (confirmDialog("The reservation is still valid. Do you really wish to cancel?")) {
-                            cancelReservation()
-                            Notification(null, "The reservation has been canceled", Notification.Type.HUMANIZED_MESSAGE).apply {
-                                position = Position.MIDDLE_CENTER
-                                styleName = "${ValoTheme.NOTIFICATION_SUCCESS} ${ValoTheme.NOTIFICATION_CLOSABLE}"
-                                this.delayMsec = -1
-                                show(Page.getCurrent())
-                            }
+                            withProgressDialog("Canceling Reservation, Please Wait") { cancelReservation() }
+                            confirmInfoBox("The reservation has been canceled")
                         } else {
                             throw RuntimeException("Unimplemented ;)")
                         }
@@ -70,6 +65,15 @@ class MyUI : UI() {
             })
             button("Cancel The Cancelation Job", { job.cancel() })
         }
+    }
+}
+
+private fun confirmInfoBox(msg: String) {
+    Notification(null, msg, Notification.Type.HUMANIZED_MESSAGE).apply {
+        position = Position.MIDDLE_CENTER
+        styleName = "${ValoTheme.NOTIFICATION_SUCCESS} ${ValoTheme.NOTIFICATION_CLOSABLE}"
+        this.delayMsec = -1
+        show(Page.getCurrent())
     }
 }
 
