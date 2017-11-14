@@ -30,9 +30,18 @@ dependencies {
     compile "com.vaadin:vaadin-themes:${vaadin.version}"
     compile "com.vaadin:vaadin-client-compiled:${vaadin.version}"
 
+    // since we're using async stuff, we need to push updated UI to the client
     compile "com.vaadin:vaadin-push:${vaadin.version}"
+    // adds support for cancelable coroutines
     compile 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.19.3'
+    // a http client which does not block
     compile 'org.asynchttpclient:async-http-client:2.0.37'
 
     compile 'ch.qos.logback:logback-classic:1.2.3'
+}
+
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
 }
