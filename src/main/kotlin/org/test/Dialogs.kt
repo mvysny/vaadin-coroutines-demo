@@ -1,6 +1,7 @@
 package org.test
 
 import com.github.vok.karibudsl.*
+import com.vaadin.shared.Registration
 import com.vaadin.ui.Alignment
 import com.vaadin.ui.UI
 import com.vaadin.ui.Window
@@ -13,8 +14,8 @@ import kotlinx.coroutines.experimental.suspendCancellableCoroutine
 inline fun <T> withProgressDialog(message: String, block: ()->T): T {
     val dlg = ProgressDialog(message)
     dlg.show()
-    return try {
-        block()
+    try {
+        return block()
     } finally {
         dlg.close()
     }
@@ -44,23 +45,29 @@ class ProgressDialog(message: String) : Window() {
  * @property response invoked with the user's response: true if the user pressed yes, false if the user pressed no or closed the dialog.
  */
 class ConfirmDialog(message: String, private val response: (confirmed: Boolean) -> Unit) : Window() {
+    private val responseRegistration: Registration
     init {
         caption = "Confirm"; center(); isResizable = true; isModal = false
-        val registration = addCloseListener({ _ -> response(false) })
+        responseRegistration = addCloseListener({ _ -> response(false) })
         verticalLayout {
             label(message)
             horizontalLayout {
                 alignment = Alignment.MIDDLE_RIGHT
-                button("Yes", { registration.remove(); close(); response(true) }) {
+                button("Yes", { cancel(); response(true) }) {
                     setPrimary()
                 }
-                button("No", { registration.remove(); close(); response(false) })
+                button("No", { cancel(); response(false) })
             }
         }
     }
 
     fun show() {
         UI.getCurrent().addWindow(this)
+    }
+
+    fun cancel() {
+        responseRegistration.remove()
+        close()
     }
 }
 
@@ -74,6 +81,6 @@ suspend fun confirmDialog(message: String = "Are you sure?"): Boolean {
         checkUIThread()
         val dlg = ConfirmDialog(message, { response -> cont.resume(response) })
         dlg.show()
-        cont.invokeOnCompletion { checkUIThread(); dlg.close() }
+        cont.invokeOnCompletion { checkUIThread(); dlg.cancel() }
     }
 }
