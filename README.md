@@ -2,7 +2,8 @@
 
 # Vaadin Coroutine Demo
 
-Demoes the possibility to use coroutines in a Vaadin app. TODO docu
+Demoes the possibility to use coroutines in a Vaadin app. Please read the [Vaadin and Kotlin Coroutines](http://mavi.logdown.com/posts/3488105)
+blogpost for explanation of the ideas behind this project. 
 
 Uses [Karibu-DSL](https://github.com/mvysny/karibu-dsl); for more information about the
 Karibu-DSL framework please see https://github.com/mvysny/karibu-dsl .
