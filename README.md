@@ -1,13 +1,15 @@
 [![Build Status](https://travis-ci.org/mvysny/vaadin-coroutines-demo.svg?branch=master)](https://travis-ci.org/mvysny/vaadin-coroutines-demo)
 
-# Vaadin Coroutine Demo
+# Vaadin Coroutines Demo
 
 Demoes the possibility to use coroutines in a Vaadin app. Please read the [Vaadin and Kotlin Coroutines](http://mavi.logdown.com/posts/3488105)
 blogpost for explanation of the ideas behind this project. 
 
 Uses [Karibu-DSL](https://github.com/mvysny/karibu-dsl); for more information about the
-Karibu-DSL framework please see https://github.com/mvysny/karibu-dsl .
-For more information on Vaadin please see https://vaadin.com/docs/-/part/framework/tutorial.html
+Karibu-DSL framework please see [https://github.com/mvysny/karibu-dsl](https://github.com/mvysny/karibu-dsl).
+For more information on Vaadin please see [Vaadin Tutorial](https://vaadin.com/docs/-/part/framework/tutorial.html)
+
+[Online Demo of the Vaadin Coroutines Demo](https://vaadin-coroutines-demo.herokuapp.com) running on Heroku.
 
 # Getting Started
 
@@ -19,13 +21,13 @@ cd vaadin-coroutine-demo
 ./gradlew build appRun
 ```
 
-The app will be running on http://localhost:8080/
+The app will be running on [http://localhost:8080/](http://localhost:8080/)
 
 # Workflow
 
 To compile the entire project, run `./gradlew`.
 
-To run the application, run `./gradlew appRun` and open http://localhost:8080/ .
+To run the application, run `./gradlew appRun` and open [http://localhost:8080/](http://localhost:8080/).
 
 This will allow you to quickly start the example app and allow you to do some basic modifications.
 For real development we recommend Intellij IDEA Ultimate, please see below for instructions.
