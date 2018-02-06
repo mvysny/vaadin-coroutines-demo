@@ -43,7 +43,7 @@ dependencies {
     compile 'org.jboss.resteasy:resteasy-servlet-initializer:3.1.3.Final'
 
     // heroku app runner
-    providedRuntime 'com.github.jsimone:webapp-runner:8.5.11.3'
+    testRuntime 'com.github.jsimone:webapp-runner:8.5.11.3'
 }
 
 kotlin {
@@ -67,7 +67,7 @@ compileTestKotlin {
 task stage(dependsOn: ['build'])
 task copyToLib(type: Copy) {
     into "$buildDir/server"
-    from(configurations.providedRuntime) {
+    from(configurations.testRuntime) {
         include "webapp-runner*"
     }
 }
