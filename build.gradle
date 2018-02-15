@@ -16,12 +16,12 @@ vaadin {
 defaultTasks 'clean', 'build'
 
 repositories {
-    maven { url "https://dl.bintray.com/mvysny/vaadin-on-kotlin" }
+    maven { url "https://dl.bintray.com/mvysny/github" }
 }
 
 dependencies {
     // Karibu-DSL dependency
-    compile 'com.github.vok.karibudsl:karibu-dsl-v8:0.2.21'
+    compile 'com.github.vok.karibudsl:karibu-dsl-v8:0.2.22'
 
     // include proper kotlin version
     compile 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.2.21'
