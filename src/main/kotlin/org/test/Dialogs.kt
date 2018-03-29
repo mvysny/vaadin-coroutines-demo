@@ -53,10 +53,13 @@ class ConfirmDialog(message: String, private val response: (confirmed: Boolean) 
             label(message)
             horizontalLayout {
                 alignment = Alignment.MIDDLE_RIGHT
-                button("Yes", { cancel(); response(true) }) {
+                button("Yes") {
                     setPrimary()
+                    onLeftClick { cancel(); response(true) }
                 }
-                button("No", { cancel(); response(false) })
+                button("No") {
+                    onLeftClick { cancel(); response(false) }
+                }
             }
         }
     }

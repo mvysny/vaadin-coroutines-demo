@@ -1,6 +1,7 @@
 package org.test
 
 import com.github.vok.karibudsl.button
+import com.github.vok.karibudsl.onLeftClick
 import com.github.vok.karibudsl.verticalLayout
 import com.vaadin.annotations.Push
 import com.vaadin.annotations.Theme
@@ -48,10 +49,12 @@ class MyUI : UI() {
             }
         }
         verticalLayout {
-            button("Buy Ticket", {
-                job = purchaseTicket()
-            })
-            button("Cancel Purchase", { job.cancel() })
+            button("Buy Ticket") {
+                onLeftClick { job = purchaseTicket() }
+            }
+            button("Cancel Purchase") {
+                onLeftClick { job.cancel() }
+            }
         }
     }
 
@@ -95,7 +98,7 @@ private fun confirmationInfoBox(msg: String) {
     }
 }
 
-@WebServlet(urlPatterns = arrayOf("/*"), name = "MyUIServlet", asyncSupported = true)
+@WebServlet(urlPatterns = ["/*"], name = "MyUIServlet", asyncSupported = true)
 @VaadinServletConfiguration(ui = MyUI::class, productionMode = false)
 class MyUIServlet : VaadinServlet()
 
