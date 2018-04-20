@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/mvysny/vaadin-coroutines-demo.svg?branch=master)](https://travis-ci.org/mvysny/vaadin-coroutines-demo)
+[![Join the chat at https://gitter.im/vaadin/vaadin-on-kotlin](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vaadin/vaadin-on-kotlin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Heroku](https://heroku-badge.herokuapp.com/?app=vaadin-coroutines-demo&style=flat&svg=1)](https://vaadin-coroutines-demo.herokuapp.com/)
 
 # Vaadin Coroutines Demo
 
