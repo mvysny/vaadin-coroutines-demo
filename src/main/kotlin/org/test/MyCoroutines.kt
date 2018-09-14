@@ -4,7 +4,6 @@ import com.vaadin.ui.UI
 import kotlinx.coroutines.experimental.*
 import org.asynchttpclient.AsyncCompletionHandler
 import org.asynchttpclient.BoundRequestBuilder
-import org.asynchttpclient.DefaultAsyncHttpClient
 import org.asynchttpclient.Response
 import kotlin.coroutines.experimental.CoroutineContext
 
@@ -34,7 +33,7 @@ suspend fun BoundRequestBuilder.async(): String =
                 cont.resumeWithException(t)
             }
         })
-        cont.invokeOnCompletion { if (!f.isDone) f.cancel(true) }
+        cont.invokeOnCancellation { if (!f.isDone) f.cancel(true) }
     }
 
 /**

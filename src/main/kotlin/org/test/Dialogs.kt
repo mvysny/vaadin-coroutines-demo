@@ -12,6 +12,7 @@ import kotlinx.coroutines.experimental.suspendCancellableCoroutine
  * Runs given block with a progress dialog being shown. When the block finishes, the dialog is automatically hidden.
  */
 inline fun <T> withProgressDialog(message: String, block: ()->T): T {
+    checkUIThread()
     val dlg = ProgressDialog(message)
     dlg.show()
     try {
@@ -43,6 +44,7 @@ class ProgressDialog(message: String) : Window() {
 /**
  * A simple confirmation dialog. Use [confirmDialog] to show the dialog.
  * @property response invoked with the user's response: true if the user pressed yes, false if the user pressed no or closed the dialog.
+ * When this closure is invoked, the dialog is already closed.
  */
 class ConfirmDialog(message: String, private val response: (confirmed: Boolean) -> Unit) : Window() {
     private val responseRegistration: Registration
@@ -82,8 +84,8 @@ class ConfirmDialog(message: String, private val response: (confirmed: Boolean) 
 suspend fun confirmDialog(message: String = "Are you sure?"): Boolean {
     return suspendCancellableCoroutine { cont: CancellableContinuation<Boolean> ->
         checkUIThread()
-        val dlg = ConfirmDialog(message, { response -> cont.resume(response) })
+        val dlg = ConfirmDialog(message) { response -> cont.resume(response) }
         dlg.show()
-        cont.invokeOnCompletion { checkUIThread(); dlg.cancel() }
+        cont.invokeOnCancellation { checkUIThread(); dlg.cancel() }
     }
 }

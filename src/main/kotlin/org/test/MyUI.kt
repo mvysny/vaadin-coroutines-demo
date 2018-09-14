@@ -6,20 +6,19 @@ import com.github.vok.karibudsl.verticalLayout
 import com.vaadin.annotations.Push
 import com.vaadin.annotations.Theme
 import com.vaadin.annotations.VaadinServletConfiguration
-import com.vaadin.server.ErrorHandler
-import com.vaadin.server.Page
-import com.vaadin.server.VaadinRequest
-import com.vaadin.server.VaadinServlet
+import com.vaadin.server.*
 import com.vaadin.shared.Position
 import com.vaadin.ui.Notification
 import com.vaadin.ui.UI
 import com.vaadin.ui.themes.ValoTheme
+import kotlinx.coroutines.experimental.CoroutineScope
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.launch
 import org.slf4j.LoggerFactory
 import javax.servlet.annotation.WebServlet
 import javax.ws.rs.ApplicationPath
 import javax.ws.rs.core.Application
+import kotlin.coroutines.experimental.CoroutineContext
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window
@@ -30,11 +29,14 @@ import javax.ws.rs.core.Application
  */
 @Theme("mytheme")
 @Push
-class MyUI : UI() {
+class MyUI : UI(), CoroutineScope {
 
     companion object {
         private val log = LoggerFactory.getLogger(MyUI::class.java)
     }
+
+    private val uiCoroutineContext = vaadin(this)
+    private val uiCoroutineScope = Job()
 
     @Transient
     private lateinit var job: Job
@@ -55,6 +57,9 @@ class MyUI : UI() {
             button("Cancel Purchase") {
                 onLeftClick { job.cancel() }
             }
+            button("Close session (must cancel all ongoing jobs)") {
+                onLeftClick { VaadinSession.getCurrent().close(); Page.getCurrent().reload() }
+            }
         }
     }
 
@@ -62,7 +67,7 @@ class MyUI : UI() {
      * Starts the ticket purchase asynchronously.
      * @return cancelable ongoing job
      */
-    private fun purchaseTicket(): Job = launch(vaadin()) {
+    private fun purchaseTicket(): Job = launch {
         // query the server for the number of available tickets. Wrap the long-running REST call in a nice progress dialog.
         val availableTickets = withProgressDialog("Checking Available Tickets, Please Wait") {
             RestClient.getNumberOfAvailableTickets()
@@ -86,6 +91,15 @@ class MyUI : UI() {
                 throw RuntimeException("Unimplemented ;)")
             }
         }
+    }
+
+    override val coroutineContext: CoroutineContext
+        get() = uiCoroutineContext + uiCoroutineScope
+
+    override fun detach() {
+        uiCoroutineScope.cancel()
+        log.info("Canceled all coroutines started from the UI")
+        super.detach()
     }
 }
 
