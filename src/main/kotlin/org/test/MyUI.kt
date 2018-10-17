@@ -13,6 +13,7 @@ import com.vaadin.ui.UI
 import com.vaadin.ui.themes.ValoTheme
 import kotlinx.coroutines.experimental.CoroutineScope
 import kotlinx.coroutines.experimental.Job
+import kotlinx.coroutines.experimental.isActive
 import kotlinx.coroutines.experimental.launch
 import org.slf4j.LoggerFactory
 import javax.servlet.annotation.WebServlet
@@ -67,28 +68,31 @@ class MyUI : UI(), CoroutineScope {
      * Starts the ticket purchase asynchronously.
      * @return cancelable ongoing job
      */
-    private fun purchaseTicket(): Job = launch {
-        // query the server for the number of available tickets. Wrap the long-running REST call in a nice progress dialog.
-        val availableTickets = withProgressDialog("Checking Available Tickets, Please Wait") {
-            RestClient.getNumberOfAvailableTickets()
-        }
+    private fun purchaseTicket(): Job {
+        check(coroutineContext.isActive)
+        return launch {
+            // query the server for the number of available tickets. Wrap the long-running REST call in a nice progress dialog.
+            val availableTickets = withProgressDialog("Checking Available Tickets, Please Wait") {
+                RestClient.getNumberOfAvailableTickets()
+            }
 
-        if (availableTickets <= 0) {
-            Notification.show("No tickets available")
-        } else {
-
-            // there seem to be tickets available. Ask the user for confirmation.
-            if (confirmDialog("There are $availableTickets available tickets. Would you like to purchase one?")) {
-
-                // let's go ahead and purchase a ticket. Wrap the long-running REST call in a nice progress dialog.
-                withProgressDialog("Purchasing") { RestClient.buyTicket() }
-
-                // show an info box that the purchase has been completed
-                confirmationInfoBox("The ticket has been purchased, thank you!")
+            if (availableTickets <= 0) {
+                Notification.show("No tickets available")
             } else {
 
-                // demonstrates the proper exception handling.
-                throw RuntimeException("Unimplemented ;)")
+                // there seem to be tickets available. Ask the user for confirmation.
+                if (confirmDialog("There are $availableTickets available tickets. Would you like to purchase one?")) {
+
+                    // let's go ahead and purchase a ticket. Wrap the long-running REST call in a nice progress dialog.
+                    withProgressDialog("Purchasing") { RestClient.buyTicket() }
+
+                    // show an info box that the purchase has been completed
+                    confirmationInfoBox("The ticket has been purchased, thank you!")
+                } else {
+
+                    // demonstrates the proper exception handling.
+                    throw RuntimeException("Unimplemented ;)")
+                }
             }
         }
     }

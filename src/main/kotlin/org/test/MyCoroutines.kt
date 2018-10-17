@@ -1,5 +1,6 @@
 package org.test
 
+import com.vaadin.server.ErrorEvent
 import com.vaadin.ui.UI
 import kotlinx.coroutines.experimental.*
 import org.asynchttpclient.AsyncCompletionHandler
@@ -60,7 +61,13 @@ private data class VaadinExceptionHandler(val ui: UI) : CoroutineExceptionHandle
         // try cancel job in the context
         context[Job]?.cancel(exception)
         // send the exception to Vaadin
-        ui.access { throw exception }
+        ui.access {
+            if (ui.errorHandler != null) {
+                ui.errorHandler.error(ErrorEvent(exception))
+            } else {
+                throw exception
+            }
+        }
     }
 }
 
