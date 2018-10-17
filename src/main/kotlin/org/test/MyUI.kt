@@ -11,10 +11,7 @@ import com.vaadin.shared.Position
 import com.vaadin.ui.Notification
 import com.vaadin.ui.UI
 import com.vaadin.ui.themes.ValoTheme
-import kotlinx.coroutines.experimental.CoroutineScope
-import kotlinx.coroutines.experimental.Job
-import kotlinx.coroutines.experimental.isActive
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.*
 import org.slf4j.LoggerFactory
 import javax.servlet.annotation.WebServlet
 import javax.ws.rs.ApplicationPath
@@ -36,8 +33,7 @@ class MyUI : UI(), CoroutineScope {
         private val log = LoggerFactory.getLogger(MyUI::class.java)
     }
 
-    private val uiCoroutineContext = vaadin(this)
-    private val uiCoroutineScope = Job()
+    private val uiCoroutineContext = Job()
 
     @Transient
     private lateinit var job: Job
@@ -70,7 +66,7 @@ class MyUI : UI(), CoroutineScope {
      */
     private fun purchaseTicket(): Job {
         check(coroutineContext.isActive)
-        return launch {
+        return launchVaadin {
             // query the server for the number of available tickets. Wrap the long-running REST call in a nice progress dialog.
             val availableTickets = withProgressDialog("Checking Available Tickets, Please Wait") {
                 RestClient.getNumberOfAvailableTickets()
@@ -98,10 +94,10 @@ class MyUI : UI(), CoroutineScope {
     }
 
     override val coroutineContext: CoroutineContext
-        get() = uiCoroutineContext + uiCoroutineScope
+        get() = uiCoroutineContext
 
     override fun detach() {
-        uiCoroutineScope.cancel()
+        uiCoroutineContext.cancel()
         log.info("Canceled all coroutines started from the UI")
         super.detach()
     }

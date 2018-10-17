@@ -48,30 +48,22 @@ private data class VaadinDispatcher(val ui: UI) : CoroutineDispatcher() {
 }
 
 /**
- * If the coroutine fails, redirect the exception to the Vaadin Error Handler (the [UI.errorHandler] if specified; if not,
- * Vaadin will just log the exception).
+ * Launches a coroutine in Vaadin UI thread in the scope of given [ui] (or the current one if none specified).
+ *
+ * All exceptions are caught and sent to the Vaadin [UI.errorHandler] - they are NOT propagated upwards and do not cancel parent job.
  */
-private data class VaadinExceptionHandler(val ui: UI) : CoroutineExceptionHandler {
-    override val key: CoroutineContext.Key<*>
-        get() = CoroutineExceptionHandler
-
-    override fun handleException(context: CoroutineContext, exception: Throwable) {
-        // ignore CancellationException (they are normal means to terminate a coroutine)
-        if (exception is CancellationException) return
-        // try cancel job in the context
-        context[Job]?.cancel(exception)
-        // send the exception to Vaadin
+fun CoroutineScope.launchVaadin(ui: UI = UI.getCurrent(), block: suspend () -> Unit): Job = launch(VaadinDispatcher(ui)) {
+    try {
+        block()
+    } catch (e: CancellationException) {
+        throw e
+    } catch (t: Throwable) {
         ui.access {
             if (ui.errorHandler != null) {
-                ui.errorHandler.error(ErrorEvent(exception))
+                ui.errorHandler.error(ErrorEvent(t))
             } else {
-                throw exception
+                throw t
             }
         }
     }
 }
-
-/**
- * Provides the Vaadin Coroutine context for given [ui] (or the current one if none specified).
- */
-fun vaadin(ui: UI = UI.getCurrent()) = VaadinDispatcher(ui) + VaadinExceptionHandler(ui)
