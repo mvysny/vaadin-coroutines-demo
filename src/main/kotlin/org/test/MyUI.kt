@@ -33,7 +33,12 @@ class MyUI : UI(), CoroutineScope {
         private val log = LoggerFactory.getLogger(MyUI::class.java)
     }
 
-    private val uiCoroutineContext = Job()
+    /**
+     * I must use the [SupervisorJob] here; regular [Job] would cancel itself if any of the child coroutines failed, and that would
+     * prevent launching more coroutines.
+     */
+    private val uiCoroutineScope = SupervisorJob()
+    private val uiCoroutineContext = vaadin(this)
 
     @Transient
     private lateinit var job: Job
@@ -66,7 +71,7 @@ class MyUI : UI(), CoroutineScope {
      */
     private fun purchaseTicket(): Job {
         check(coroutineContext.isActive)
-        return launchVaadin {
+        return launch {
             // query the server for the number of available tickets. Wrap the long-running REST call in a nice progress dialog.
             val availableTickets = withProgressDialog("Checking Available Tickets, Please Wait") {
                 RestClient.getNumberOfAvailableTickets()
@@ -94,10 +99,10 @@ class MyUI : UI(), CoroutineScope {
     }
 
     override val coroutineContext: CoroutineContext
-        get() = uiCoroutineContext
+        get() = uiCoroutineContext + uiCoroutineScope
 
     override fun detach() {
-        uiCoroutineContext.cancel()
+        uiCoroutineScope.cancel()
         log.info("Canceled all coroutines started from the UI")
         super.detach()
     }
