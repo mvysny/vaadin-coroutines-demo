@@ -41,7 +41,7 @@ class MyUI : UI(), CoroutineScope {
     private val uiCoroutineContext = vaadin(this)
 
     @Transient
-    private lateinit var job: Job
+    private var job: Job? = null
 
     @Override
     override fun init(vaadinRequest: VaadinRequest?) {
@@ -57,7 +57,7 @@ class MyUI : UI(), CoroutineScope {
                 onLeftClick { job = purchaseTicket() }
             }
             button("Cancel Purchase") {
-                onLeftClick { job.cancel() }
+                onLeftClick { job?.cancel() }
             }
             button("Close session (must cancel all ongoing jobs)") {
                 onLeftClick { VaadinSession.getCurrent().close(); Page.getCurrent().reload() }

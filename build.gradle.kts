@@ -49,6 +49,9 @@ dependencies {
 
     // heroku app runner
     testRuntime("com.github.jsimone:webapp-runner:9.0.11.0")
+
+    testCompile("com.github.kaributesting:karibu-testing-v8:0.5.0")
+    testCompile("com.github.mvysny.dynatest:dynatest-engine:0.11")
 }
 
 tasks.withType<Test> {
