@@ -25,7 +25,7 @@ inline fun <T> withProgressDialog(message: String, block: ()->T): T {
 /**
  * A simple progress dialog. Use [withProgressDialog] to show the dialog.
  */
-class ProgressDialog(message: String) : Window() {
+class ProgressDialog(val message: String) : Window() {
     init {
         // the dialog is not modal on purpose, so that you can try the "Cancel" button.
         center(); isResizable = false; isModal = false; isClosable = false
@@ -46,7 +46,7 @@ class ProgressDialog(message: String) : Window() {
  * @property response invoked with the user's response: true if the user pressed yes, false if the user pressed no or closed the dialog.
  * When this closure is invoked, the dialog is already closed.
  */
-class ConfirmDialog(message: String, private val response: (confirmed: Boolean) -> Unit) : Window() {
+class ConfirmDialog(val message: String, private val response: (confirmed: Boolean) -> Unit) : Window() {
     private val responseRegistration: Registration
     init {
         caption = "Confirm"; center(); isResizable = true; isModal = false

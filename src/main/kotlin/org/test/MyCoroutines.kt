@@ -23,7 +23,7 @@ suspend fun BoundRequestBuilder.async(): String =
             @Throws(Exception::class)
             override fun onCompleted(response: Response): Response {
                 if (response.statusCode !in 200..299) {
-                    cont.resumeWithException(RuntimeException("Request failed: ${response.statusCode} ${response.statusText}"))
+                    cont.resumeWithException(RuntimeException("Got failure response: ${response.statusCode} ${response.statusText}"))
                 } else {
                     cont.resume(response.responseBody)
                 }

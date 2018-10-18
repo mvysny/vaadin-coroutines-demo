@@ -11,6 +11,7 @@ object RestClient {
      * See [TicketsRest] for the server dummy implementation.
      */
     suspend fun getNumberOfAvailableTickets(): Int {
+        checkUIThread()
         val response = DefaultAsyncHttpClient().prepareGet("http://localhost:$port/rest/tickets/available").async()
         return response.toInt()
     }
@@ -20,6 +21,7 @@ object RestClient {
      * irrespective of this job being canceled.
      */
     suspend fun buyTicket() {
+        checkUIThread()
         DefaultAsyncHttpClient().preparePost("http://localhost:$port/rest/tickets/purchase").async()
     }
 }

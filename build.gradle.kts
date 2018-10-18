@@ -24,6 +24,8 @@ repositories {
     jcenter()
 }
 
+val staging by configurations.creating
+
 dependencies {
     // Karibu-DSL dependency
     compile("com.github.vok.karibudsl:karibu-dsl-v8:0.4.11")
@@ -48,10 +50,11 @@ dependencies {
     compile("org.jboss.resteasy:resteasy-servlet-initializer:3.1.3.Final")
 
     // heroku app runner
-    testRuntime("com.github.jsimone:webapp-runner:9.0.11.0")
+    staging("com.github.jsimone:webapp-runner:9.0.11.0")
 
-    testCompile("com.github.kaributesting:karibu-testing-v8:0.5.0")
+    testCompile("com.github.kaributesting:karibu-testing-v8:0.5.1")
     testCompile("com.github.mvysny.dynatest:dynatest-engine:0.11")
+    testCompile("io.javalin:javalin:2.3.0")
 }
 
 tasks.withType<Test> {
@@ -76,7 +79,7 @@ kotlin {
 tasks {
     val copyToLib by registering(Copy::class) {
         into("$buildDir/server")
-        from(configurations.testRuntime) {
+        from(staging) {
             include("webapp-runner*")
         }
     }
