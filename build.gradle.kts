@@ -22,6 +22,7 @@ defaultTasks("clean", "build")
 
 repositories {
     jcenter()
+    maven { setUrl("https://dl.bintray.com/mvysny/github") }
 }
 
 val staging by configurations.creating
