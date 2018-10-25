@@ -41,7 +41,6 @@ class MyUITest : DynaTest({
         MockVaadin.runUIQueue()
         Thread.sleep(50)
         retry {
-            MockVaadin.runUIQueue()
             expect("There are 25 available tickets. Would you like to purchase one?") { _get<ConfirmDialog>().message }
         }
     }
@@ -51,7 +50,6 @@ class MyUITest : DynaTest({
         MockVaadin.runUIQueue()
         Thread.sleep(50)
         retry {
-            MockVaadin.runUIQueue()
             _get<ConfirmDialog>()._get<Button> { caption = "No" }._click()
         }
         MockVaadin.runUIQueue(true)
