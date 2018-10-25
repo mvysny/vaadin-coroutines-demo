@@ -39,17 +39,21 @@ class MyUITest : DynaTest({
     test("purchase ticket shows a purchase confirmation dialog") {
         _get<Button> { caption = "Buy Ticket" } ._click()
         MockVaadin.runUIQueue()
-        Thread.sleep(200)
-        MockVaadin.runUIQueue()
-        expect("There are 25 available tickets. Would you like to purchase one?") { _get<ConfirmDialog>().message }
+        Thread.sleep(50)
+        retry {
+            MockVaadin.runUIQueue()
+            expect("There are 25 available tickets. Would you like to purchase one?") { _get<ConfirmDialog>().message }
+        }
     }
 
     test("clicking No throws an exception but doesn't prevent another coroutine to be created") {
         _get<Button> { caption = "Buy Ticket" } ._click()
         MockVaadin.runUIQueue()
-        Thread.sleep(200)
-        MockVaadin.runUIQueue()
-        val buttonNo = _get<ConfirmDialog>()._get<Button> { caption = "No" } ._click()
+        Thread.sleep(50)
+        retry {
+            MockVaadin.runUIQueue()
+            _get<ConfirmDialog>()._get<Button> { caption = "No" }._click()
+        }
         MockVaadin.runUIQueue(true)
         _get<Button> { caption = "Buy Ticket" } ._click()
         MockVaadin.runUIQueue()
