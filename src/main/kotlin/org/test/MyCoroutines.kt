@@ -2,11 +2,13 @@ package org.test
 
 import com.vaadin.server.ErrorEvent
 import com.vaadin.ui.UI
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.*
 import org.asynchttpclient.AsyncCompletionHandler
 import org.asynchttpclient.BoundRequestBuilder
 import org.asynchttpclient.Response
-import kotlin.coroutines.experimental.CoroutineContext
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 
 fun checkUIThread() {
     require(UI.getCurrent() != null) { "Not running in Vaadin UI thread" }

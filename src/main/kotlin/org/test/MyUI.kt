@@ -11,12 +11,12 @@ import com.vaadin.shared.Position
 import com.vaadin.ui.Notification
 import com.vaadin.ui.UI
 import com.vaadin.ui.themes.ValoTheme
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.*
 import org.slf4j.LoggerFactory
 import javax.servlet.annotation.WebServlet
 import javax.ws.rs.ApplicationPath
 import javax.ws.rs.core.Application
-import kotlin.coroutines.experimental.CoroutineContext
+import kotlin.coroutines.CoroutineContext
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window

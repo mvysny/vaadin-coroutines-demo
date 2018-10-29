@@ -5,8 +5,9 @@ import com.vaadin.shared.Registration
 import com.vaadin.ui.Alignment
 import com.vaadin.ui.UI
 import com.vaadin.ui.Window
-import kotlinx.coroutines.experimental.CancellableContinuation
-import kotlinx.coroutines.experimental.suspendCancellableCoroutine
+import kotlinx.coroutines.CancellableContinuation
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
 
 /**
  * Runs given block with a progress dialog being shown. When the block finishes, the dialog is automatically hidden.

@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.Coroutines
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.2.71"
+    kotlin("jvm") version "1.3.0"
     // need to use Gretty here because of https://github.com/johndevs/gradle-vaadin-plugin/issues/317
     id("org.gretty") version "2.2.0"
     id("com.devsoap.plugin.vaadin") version "1.4.1"
@@ -41,7 +41,7 @@ dependencies {
     // since we're using async stuff, we need to push updated UI to the client
     compile("com.vaadin:vaadin-push:${vaadin.version}")
     // adds support for cancelable coroutines
-    compile("org.jetbrains.kotlinx:kotlinx-coroutines-core:0.30.2")
+    compile("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.0")
     // a http client which does not block
     compile("org.asynchttpclient:async-http-client:2.0.37")
 
@@ -68,12 +68,6 @@ tasks.withType<Test> {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
-}
-
-kotlin {
-    experimental {
-        coroutines = Coroutines.ENABLE
-    }
 }
 
 // Heroku
