@@ -15,7 +15,7 @@ gretty {
 }
 
 vaadin {
-    version = "8.5.2"
+    version = "8.6.0"
 }
 
 defaultTasks("clean", "build")
@@ -53,7 +53,7 @@ dependencies {
     // heroku app runner
     staging("com.github.jsimone:webapp-runner:9.0.11.0")
 
-    testCompile("com.github.kaributesting:karibu-testing-v8:0.5.3")
+    testCompile("com.github.kaributesting:karibu-testing-v8:0.5.4")
     testCompile("com.github.mvysny.dynatest:dynatest-engine:0.11")
     testCompile("io.javalin:javalin:2.3.0")
 }
