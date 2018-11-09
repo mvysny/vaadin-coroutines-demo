@@ -1,6 +1,6 @@
 package org.test
 
-import com.github.vok.karibudsl.*
+import com.github.mvysny.karibudsl.v8.*
 import com.vaadin.shared.Registration
 import com.vaadin.ui.Alignment
 import com.vaadin.ui.UI

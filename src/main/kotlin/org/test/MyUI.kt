@@ -1,8 +1,8 @@
 package org.test
 
-import com.github.vok.karibudsl.button
-import com.github.vok.karibudsl.onLeftClick
-import com.github.vok.karibudsl.verticalLayout
+import com.github.mvysny.karibudsl.v8.button
+import com.github.mvysny.karibudsl.v8.onLeftClick
+import com.github.mvysny.karibudsl.v8.verticalLayout
 import com.vaadin.annotations.Push
 import com.vaadin.annotations.Theme
 import com.vaadin.annotations.VaadinServletConfiguration
