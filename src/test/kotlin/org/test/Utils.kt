@@ -1,6 +1,6 @@
 package org.test
 
-import com.github.karibu.testing.MockVaadin
+import com.github.mvysny.kaributesting.v8.MockVaadin
 
 /**
  * Retries given [block] for at most [maxDuration] millis until the block

@@ -1,17 +1,10 @@
 package org.test
 
-import com.github.karibu.mockhttp.MockHttpEnvironment
-import com.github.karibu.testing.MockVaadin
-import com.github.karibu.testing._click
-import com.github.karibu.testing._get
+import com.github.mvysny.kaributesting.mockhttp.MockHttpEnvironment
+import com.github.mvysny.kaributesting.v8.*
 import com.github.mvysny.dynatest.DynaTest
-import com.github.mvysny.dynatest.expectThrows
-import com.vaadin.server.VaadinRequest
-import com.vaadin.server.VaadinSession
 import com.vaadin.ui.Button
-import com.vaadin.ui.Label
 import io.javalin.Javalin
-import java.util.concurrent.ExecutionException
 import kotlin.test.expect
 
 class MyUITest : DynaTest({

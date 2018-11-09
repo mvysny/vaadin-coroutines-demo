@@ -7,7 +7,7 @@ fun Javalin.ticketsRestAPI(serviceDurationMs: Long = 50) {
         Thread.sleep(serviceDurationMs) // simulate delay
         ctx.result("25")
     }
-    post("/rest/tickets/purchase") { ctx ->
+    post("/rest/tickets/purchase") { _ ->
         Thread.sleep(serviceDurationMs) // simulate delay
         println("""
             ===================
