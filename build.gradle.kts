@@ -15,7 +15,7 @@ gretty {
 }
 
 vaadin {
-    version = "8.6.2"
+    version = "8.6.4"
 }
 
 defaultTasks("clean", "build")
@@ -28,7 +28,7 @@ val staging by configurations.creating
 
 dependencies {
     // Karibu-DSL dependency
-    compile("com.github.mvysny.karibudsl:karibu-dsl-v8:0.5.1")
+    compile("com.github.mvysny.karibudsl:karibu-dsl-v8:0.5.3")
 
     // include proper kotlin version
     compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
@@ -50,10 +50,10 @@ dependencies {
     compile("org.jboss.resteasy:resteasy-servlet-initializer:3.1.3.Final")
 
     // heroku app runner
-    staging("com.github.jsimone:webapp-runner:9.0.11.0")
+    staging("com.github.jsimone:webapp-runner:9.0.14.0")
 
-    testCompile("com.github.mvysny.kaributesting:karibu-testing-v8:1.0.3")
-    testCompile("com.github.mvysny.dynatest:dynatest-engine:0.12")
+    testCompile("com.github.mvysny.kaributesting:karibu-testing-v8:1.0.6")
+    testCompile("com.github.mvysny.dynatest:dynatest-engine:0.13")
     testCompile("io.javalin:javalin:2.3.0")
 }
 
