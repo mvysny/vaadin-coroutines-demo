@@ -16,7 +16,7 @@ class MyUITest : DynaTest({
         MockHttpEnvironment.localPort = 23442
     }
     afterGroup { javalin.stop() }
-    beforeEach { MockVaadin.setup { MyUI() } }
+    beforeEach { MockVaadin.setup({ MyUI() }) }
     afterEach { MockVaadin.tearDown() }
 
     test("canceling purchase does nothing if the purchase is not ongoing") {
