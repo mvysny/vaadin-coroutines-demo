@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.Coroutines
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.3.41"
+    kotlin("jvm") version "1.3.50"
     // need to use Gretty here because of https://github.com/johndevs/gradle-vaadin-plugin/issues/317
     id("org.gretty") version "2.3.1"
     id("com.devsoap.plugin.vaadin") version "1.4.1"
@@ -15,7 +15,7 @@ gretty {
 }
 
 vaadin {
-    version = "8.8.5"
+    version = "8.8.6"
 }
 
 defaultTasks("clean", "build")
@@ -50,9 +50,9 @@ dependencies {
     compile("org.jboss.resteasy:resteasy-servlet-initializer:3.1.3.Final")
 
     // heroku app runner
-    staging("com.github.jsimone:webapp-runner:9.0.20.1")
+    staging("com.github.jsimone:webapp-runner:9.0.24.0")
 
-    testCompile("com.github.mvysny.kaributesting:karibu-testing-v8:1.1.8")
+    testCompile("com.github.mvysny.kaributesting:karibu-testing-v8:1.1.9")
     testCompile("com.github.mvysny.dynatest:dynatest-engine:0.15")
     testCompile("io.javalin:javalin:3.1.0")
 }
