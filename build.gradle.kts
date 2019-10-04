@@ -40,7 +40,7 @@ dependencies {
     // since we're using async stuff, we need to push updated UI to the client
     compile("com.vaadin:vaadin-push:${vaadin.version}")
     // adds support for cancelable coroutines
-    compile("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.1")
+    compile("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2")
     // a http client which does not block
     compile("org.asynchttpclient:async-http-client:2.0.37")
 
