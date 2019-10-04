@@ -50,7 +50,7 @@ dependencies {
     compile("org.jboss.resteasy:resteasy-servlet-initializer:3.1.3.Final")
 
     // heroku app runner
-    staging("com.github.jsimone:webapp-runner:9.0.24.0")
+    staging("com.github.jsimone:webapp-runner:9.0.26.0")
 
     testCompile("com.github.mvysny.kaributesting:karibu-testing-v8:1.1.13")
     testCompile("com.github.mvysny.dynatest:dynatest-engine:0.15")
