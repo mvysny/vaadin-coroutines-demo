@@ -15,7 +15,7 @@ gretty {
 }
 
 vaadin {
-    version = "8.8.6"
+    version = "8.9.0"
 }
 
 defaultTasks("clean", "build")
@@ -40,11 +40,11 @@ dependencies {
     // since we're using async stuff, we need to push updated UI to the client
     compile("com.vaadin:vaadin-push:${vaadin.version}")
     // adds support for cancelable coroutines
-    compile("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.1")
+    compile("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2")
     // a http client which does not block
     compile("org.asynchttpclient:async-http-client:2.0.37")
 
-    compile("ch.qos.logback:logback-classic:1.2.3")
+    testCompile("org.slf4j:slf4j-simple:1.7.28")
 
     // simple REST support so that we can test the client
     compile("org.jboss.resteasy:resteasy-servlet-initializer:3.1.3.Final")
@@ -52,9 +52,9 @@ dependencies {
     // heroku app runner
     staging("com.github.jsimone:webapp-runner:9.0.24.0")
 
-    testCompile("com.github.mvysny.kaributesting:karibu-testing-v8:1.1.9")
+    testCompile("com.github.mvysny.kaributesting:karibu-testing-v8:1.1.13")
     testCompile("com.github.mvysny.dynatest:dynatest-engine:0.15")
-    testCompile("io.javalin:javalin:3.1.0")
+    testCompile("io.javalin:javalin:3.5.0")
 }
 
 tasks.withType<Test> {
