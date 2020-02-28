@@ -3,10 +3,10 @@ import org.jetbrains.kotlin.gradle.dsl.Coroutines
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.3.50"
+    kotlin("jvm") version "1.3.61"
     // need to use Gretty here because of https://github.com/johndevs/gradle-vaadin-plugin/issues/317
-    id("org.gretty") version "2.3.1"
-    id("com.devsoap.plugin.vaadin") version "1.4.1"
+    id("org.gretty") version "3.0.1"
+    id("com.devsoap.plugin.vaadin") version "2.0.0.beta2"
 }
 
 gretty {
@@ -15,7 +15,7 @@ gretty {
 }
 
 vaadin {
-    version = "8.9.0"
+    version = "8.10.1"
 }
 
 defaultTasks("clean", "build")
@@ -28,7 +28,7 @@ val staging by configurations.creating
 
 dependencies {
     // Karibu-DSL dependency
-    compile("com.github.mvysny.karibudsl:karibu-dsl-v8:0.7.0")
+    compile("com.github.mvysny.karibudsl:karibu-dsl-v8:0.7.5")
 
     // include proper kotlin version
     compile(kotlin("stdlib-jdk8"))
@@ -44,17 +44,17 @@ dependencies {
     // a http client which does not block
     compile("org.asynchttpclient:async-http-client:2.0.37")
 
-    testCompile("org.slf4j:slf4j-simple:1.7.28")
+    testCompile("org.slf4j:slf4j-simple:1.7.30")
 
     // simple REST support so that we can test the client
     compile("org.jboss.resteasy:resteasy-servlet-initializer:3.1.3.Final")
 
     // heroku app runner
-    staging("com.github.jsimone:webapp-runner:9.0.24.0")
+    staging("com.github.jsimone:webapp-runner:9.0.27.1")
 
-    testCompile("com.github.mvysny.kaributesting:karibu-testing-v8:1.1.13")
+    testCompile("com.github.mvysny.kaributesting:karibu-testing-v8:1.1.19")
     testCompile("com.github.mvysny.dynatest:dynatest-engine:0.15")
-    testCompile("io.javalin:javalin:3.5.0")
+    testCompile("io.javalin:javalin:3.7.0")
 }
 
 tasks.withType<Test> {
