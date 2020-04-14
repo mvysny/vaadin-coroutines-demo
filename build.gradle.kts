@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.Coroutines
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.3.61"
+    kotlin("jvm") version "1.3.71"
     // need to use Gretty here because of https://github.com/johndevs/gradle-vaadin-plugin/issues/317
     id("org.gretty") version "3.0.1"
     id("com.devsoap.plugin.vaadin") version "2.0.0.beta2"
@@ -15,7 +15,7 @@ gretty {
 }
 
 vaadin {
-    version = "8.10.1"
+    version = "8.10.3"
 }
 
 defaultTasks("clean", "build")
@@ -40,7 +40,7 @@ dependencies {
     // since we're using async stuff, we need to push updated UI to the client
     compile("com.vaadin:vaadin-push:${vaadin.version}")
     // adds support for cancelable coroutines
-    compile("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2")
+    compile("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5")
     // a http client which does not block
     compile("org.asynchttpclient:async-http-client:2.0.37")
 
@@ -50,11 +50,11 @@ dependencies {
     compile("org.jboss.resteasy:resteasy-servlet-initializer:3.1.3.Final")
 
     // heroku app runner
-    staging("com.github.jsimone:webapp-runner:9.0.27.1")
+    staging("com.heroku:webapp-runner:9.0.31.0")
 
-    testCompile("com.github.mvysny.kaributesting:karibu-testing-v8:1.1.19")
-    testCompile("com.github.mvysny.dynatest:dynatest-engine:0.15")
-    testCompile("io.javalin:javalin:3.7.0")
+    testCompile("com.github.mvysny.kaributesting:karibu-testing-v8:1.1.23")
+    testCompile("com.github.mvysny.dynatest:dynatest-engine:0.16")
+    testCompile("io.javalin:javalin:3.8.0")
 }
 
 tasks.withType<Test> {
