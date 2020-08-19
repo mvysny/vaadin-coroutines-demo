@@ -10,7 +10,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 
 /**
- * Runs given block with a progress dialog being shown. When the block finishes, the dialog is automatically hidden.
+ * Runs given block with a progress dialog being shown. When the block finishes, the dialog is automatically closed.
  */
 inline fun <T> withProgressDialog(message: String, block: ()->T): T {
     checkUIThread()

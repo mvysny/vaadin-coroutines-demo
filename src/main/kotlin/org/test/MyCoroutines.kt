@@ -5,6 +5,7 @@ import com.vaadin.ui.UI
 import kotlinx.coroutines.*
 import org.asynchttpclient.AsyncCompletionHandler
 import org.asynchttpclient.BoundRequestBuilder
+import org.asynchttpclient.ListenableFuture
 import org.asynchttpclient.Response
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.resume
@@ -20,7 +21,7 @@ fun checkUIThread() {
  */
 suspend fun BoundRequestBuilder.async(): String =
     suspendCancellableCoroutine { cont: CancellableContinuation<String> ->
-        val f = setFollowRedirect(true).execute(object : AsyncCompletionHandler<Response>() {
+        val f: ListenableFuture<Response> = setFollowRedirect(true).execute(object : AsyncCompletionHandler<Response>() {
 
             @Throws(Exception::class)
             override fun onCompleted(response: Response): Response {
@@ -72,4 +73,4 @@ private data class VaadinExceptionHandler(val ui: UI) : CoroutineExceptionHandle
 /**
  * Provides the Vaadin Coroutine context for given [ui] (or the current one if none specified).
  */
-fun vaadin(ui: UI = UI.getCurrent()) = VaadinDispatcher(ui) + VaadinExceptionHandler(ui)
+fun vaadin(ui: UI = UI.getCurrent()): CoroutineContext = VaadinDispatcher(ui) + VaadinExceptionHandler(ui)

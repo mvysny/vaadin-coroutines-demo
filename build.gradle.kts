@@ -54,7 +54,7 @@ dependencies {
 
     testCompile("com.github.mvysny.kaributesting:karibu-testing-v8:1.1.29")
     testCompile("com.github.mvysny.dynatest:dynatest-engine:0.16")
-    testCompile("io.javalin:javalin:3.8.0")
+    testCompile("io.javalin:javalin:3.9.1")
 }
 
 tasks.withType<Test> {
