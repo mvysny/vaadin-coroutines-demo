@@ -51,8 +51,8 @@ dependencies {
     // heroku app runner
     staging("com.heroku:webapp-runner:9.0.31.0")
 
-    testCompile("com.github.mvysny.kaributesting:karibu-testing-v8:1.1.29")
-    testCompile("com.github.mvysny.dynatest:dynatest-engine:0.16")
+    testCompile("com.github.mvysny.kaributesting:karibu-testing-v8:1.1.30")
+    testCompile("com.github.mvysny.dynatest:dynatest-engine:0.17")
     testCompile("io.javalin:javalin:3.9.1")
 }
 
