@@ -39,7 +39,7 @@ dependencies {
     // since we're using async stuff, we need to push updated UI to the client
     compile("com.vaadin:vaadin-push:${vaadin.version}")
     // adds support for cancelable coroutines
-    compile("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5")
+    compile("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8")
     // a http client which does not block
     compile("org.asynchttpclient:async-http-client:2.0.37")
 
@@ -52,7 +52,7 @@ dependencies {
     staging("com.heroku:webapp-runner:9.0.36.1")
 
     testCompile("com.github.mvysny.kaributesting:karibu-testing-v8:1.2.5")
-    testCompile("com.github.mvysny.dynatest:dynatest-engine:0.17")
+    testCompile("com.github.mvysny.dynatest:dynatest-engine:0.19")
     testCompile("io.javalin:javalin:3.10.1")
 }
 
