@@ -14,7 +14,7 @@ gretty {
 }
 
 vaadin {
-    version = "8.11.3"
+    version = "8.12.0"
 }
 
 defaultTasks("clean", "build")
