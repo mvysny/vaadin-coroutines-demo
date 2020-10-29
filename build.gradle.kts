@@ -48,7 +48,7 @@ dependencies {
     providedCompile("javax.servlet:javax.servlet-api:3.1.0")
 
     // adds support for cancelable coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0")
     // a http client which does not block
     implementation("org.asynchttpclient:async-http-client:2.0.37")
 
