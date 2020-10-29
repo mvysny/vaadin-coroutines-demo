@@ -11,9 +11,7 @@ import javax.servlet.http.HttpServletResponse
 class MyRestServlet : HttpServlet() {
     val javalin: JavalinServlet = Javalin.createStandalone()
             .get("/rest") { ctx -> ctx.result("Hello!") }
-            .apply {
-                ticketsRestAPI(1000)
-            }
+            .apply { ticketsRestAPI(1000) }
             .servlet()
 
     override fun service(req: HttpServletRequest, resp: HttpServletResponse) {
