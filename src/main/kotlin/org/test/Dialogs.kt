@@ -1,10 +1,13 @@
 package org.test
 
-import com.github.mvysny.karibudsl.v8.*
-import com.vaadin.shared.Registration
-import com.vaadin.ui.Alignment
-import com.vaadin.ui.UI
-import com.vaadin.ui.Window
+import com.github.mvysny.karibudsl.v10.*
+import com.vaadin.flow.component.Component
+import com.vaadin.flow.component.HasComponents
+import com.vaadin.flow.component.Tag
+import com.vaadin.flow.component.dependency.JsModule
+import com.vaadin.flow.component.dependency.NpmPackage
+import com.vaadin.flow.component.dialog.Dialog
+import com.vaadin.flow.shared.Registration
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
@@ -15,7 +18,7 @@ import kotlin.coroutines.resume
 inline fun <T> withProgressDialog(message: String, block: ()->T): T {
     checkUIThread()
     val dlg = ProgressDialog(message)
-    dlg.show()
+    dlg.open()
     try {
         return block()
     } finally {
@@ -24,21 +27,29 @@ inline fun <T> withProgressDialog(message: String, block: ()->T): T {
 }
 
 /**
+ * https://vaadin.com/directory/component/vaadin-component-factoryvcf-progress-spinner
+ */
+@Tag("vcf-progress-spinner")
+@NpmPackage("@vaadin-component-factory/vcf-progress-spinner", version = "1.0.1")
+@JsModule("@vaadin-component-factory/vcf-progress-spinner")
+class Spinner : Component()
+
+@VaadinDsl
+fun (@VaadinDsl HasComponents).spinner(block: (@VaadinDsl Spinner).() -> Unit = {}): Spinner
+        = init(Spinner(), block)
+
+/**
  * A simple progress dialog. Use [withProgressDialog] to show the dialog.
  */
-class ProgressDialog(val message: String) : Window() {
+class ProgressDialog(val message: String) : Dialog() {
     init {
         // the dialog is not modal on purpose, so that you can try the "Cancel" button.
-        center(); isResizable = false; isModal = false; isClosable = false
+        isResizable = false; isModal = false;
         horizontalLayout {
             isMargin = true
             spinner()
-            label(message)
+            span(message)
         }
-    }
-
-    fun show() {
-        UI.getCurrent().addWindow(this)
     }
 }
 
@@ -47,15 +58,15 @@ class ProgressDialog(val message: String) : Window() {
  * @property response invoked with the user's response: true if the user pressed yes, false if the user pressed no or closed the dialog.
  * When this closure is invoked, the dialog is already closed.
  */
-class ConfirmDialog(val message: String, private val response: (confirmed: Boolean) -> Unit) : Window() {
+class ConfirmDialog(val message: String, private val response: (confirmed: Boolean) -> Unit) : Dialog() {
     private val responseRegistration: Registration
     init {
-        caption = "Confirm"; center(); isResizable = true; isModal = false
-        responseRegistration = addCloseListener({ _ -> response(false) })
+        isResizable = true; isModal = false
+        responseRegistration = addDialogCloseActionListener { response(false) }
         verticalLayout {
-            label(message)
+            span(message)
             horizontalLayout {
-                alignment = Alignment.MIDDLE_RIGHT
+                content { align(right, middle) }
                 button("Yes") {
                     setPrimary()
                     onLeftClick { cancel(); response(true) }
@@ -65,10 +76,6 @@ class ConfirmDialog(val message: String, private val response: (confirmed: Boole
                 }
             }
         }
-    }
-
-    fun show() {
-        UI.getCurrent().addWindow(this)
     }
 
     fun cancel() {
@@ -86,7 +93,7 @@ suspend fun confirmDialog(message: String = "Are you sure?"): Boolean {
     return suspendCancellableCoroutine { cont: CancellableContinuation<Boolean> ->
         checkUIThread()
         val dlg = ConfirmDialog(message) { response -> cont.resume(response) }
-        dlg.show()
+        dlg.open()
         cont.invokeOnCancellation { checkUIThread(); dlg.cancel() }
     }
 }

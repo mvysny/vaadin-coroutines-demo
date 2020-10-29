@@ -1,16 +1,14 @@
 package org.test
 
-import com.github.mvysny.karibudsl.v8.button
-import com.github.mvysny.karibudsl.v8.onLeftClick
-import com.github.mvysny.karibudsl.v8.verticalLayout
-import com.vaadin.annotations.Push
-import com.vaadin.annotations.Theme
-import com.vaadin.annotations.VaadinServletConfiguration
-import com.vaadin.server.*
-import com.vaadin.shared.Position
-import com.vaadin.ui.Notification
-import com.vaadin.ui.UI
-import com.vaadin.ui.themes.ValoTheme
+import com.github.mvysny.karibudsl.v10.*
+import com.vaadin.flow.component.DetachEvent
+import com.vaadin.flow.component.UI
+import com.vaadin.flow.component.notification.Notification
+import com.vaadin.flow.component.notification.NotificationVariant
+import com.vaadin.flow.component.page.Page
+import com.vaadin.flow.component.page.Push
+import com.vaadin.flow.router.Route
+import com.vaadin.flow.server.VaadinSession
 import kotlinx.coroutines.*
 import org.slf4j.LoggerFactory
 import javax.servlet.annotation.WebServlet
@@ -25,12 +23,12 @@ import kotlin.coroutines.CoroutineContext
  * The UI is initialized using [init]. This method is intended to be
  * overridden to add component to the user interface and initialize non-component functionality.
  */
-@Theme("mytheme")
 @Push
-class MyUI : UI(), CoroutineScope {
+@Route("")
+class MainRoute : KComposite(), CoroutineScope {
 
     companion object {
-        private val log = LoggerFactory.getLogger(MyUI::class.java)
+        private val log = LoggerFactory.getLogger(MainRoute::class.java)
     }
 
     /**
@@ -38,20 +36,12 @@ class MyUI : UI(), CoroutineScope {
      * prevent launching more coroutines.
      */
     private val uiCoroutineScope = SupervisorJob()
-    private val uiCoroutineContext = vaadin(this)
+    private val uiCoroutineContext = vaadin()
 
     @Transient
     private var job: Job? = null
 
-    @Override
-    override fun init(vaadinRequest: VaadinRequest?) {
-        errorHandler = ErrorHandler { event ->
-            log.error("UI error", event.throwable)
-            Notification("Internal error", "Sorry! ${event.throwable}", Notification.Type.ERROR_MESSAGE).apply {
-                position = Position.TOP_CENTER
-                show(page)
-            }
-        }
+    private val root = ui {
         verticalLayout {
             button("Buy Ticket") {
                 onLeftClick { job = purchaseTicket() }
@@ -60,7 +50,7 @@ class MyUI : UI(), CoroutineScope {
                 onLeftClick { job?.cancel() }
             }
             button("Close session (must cancel all ongoing jobs)") {
-                onLeftClick { VaadinSession.getCurrent().close(); Page.getCurrent().reload() }
+                onLeftClick { VaadinSession.getCurrent().close(); UI.getCurrent().page.reload() }
             }
         }
     }
@@ -78,7 +68,7 @@ class MyUI : UI(), CoroutineScope {
             }
 
             if (availableTickets <= 0) {
-                Notification.show("No tickets available")
+                Notification.show("No tickets available", 0, Notification.Position.MIDDLE)
             } else {
 
                 // there seem to be tickets available. Ask the user for confirmation.
@@ -92,7 +82,7 @@ class MyUI : UI(), CoroutineScope {
                 } else {
 
                     // demonstrates the proper exception handling.
-                    throw RuntimeException("Unimplemented ;)")
+                    throw RuntimeException("Unimplemented - should bubble towards the VaadinSession errorHandler")
                 }
             }
         }
@@ -101,25 +91,18 @@ class MyUI : UI(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = uiCoroutineContext + uiCoroutineScope
 
-    override fun detach() {
+    override fun onDetach(detachEvent: DetachEvent) {
         uiCoroutineScope.cancel()
         log.info("Canceled all coroutines started from the UI")
-        super.detach()
+        super.onDetach(detachEvent)
     }
 }
 
 private fun confirmationInfoBox(msg: String) {
-    Notification(null, msg, Notification.Type.HUMANIZED_MESSAGE).apply {
-        position = Position.MIDDLE_CENTER
-        styleName = "${ValoTheme.NOTIFICATION_SUCCESS} ${ValoTheme.NOTIFICATION_CLOSABLE}"
-        this.delayMsec = -1
-        show(Page.getCurrent())
-    }
+    Notification(msg, 3000, Notification.Position.MIDDLE).apply {
+        addThemeVariants(NotificationVariant.LUMO_SUCCESS, NotificationVariant.LUMO_PRIMARY)
+    }.open()
 }
-
-@WebServlet(urlPatterns = ["/*"], name = "MyUIServlet", asyncSupported = true)
-@VaadinServletConfiguration(ui = MyUI::class, productionMode = false)
-class MyUIServlet : VaadinServlet()
 
 @ApplicationPath("/rest")
 class ApplicationConfig : Application()

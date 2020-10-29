@@ -1,7 +1,10 @@
 package org.test
 
-import com.vaadin.server.ErrorEvent
-import com.vaadin.ui.UI
+import com.vaadin.flow.component.UI
+import com.vaadin.flow.server.Command
+import com.vaadin.flow.server.ErrorEvent
+import com.vaadin.flow.server.ErrorHandler
+import com.vaadin.flow.server.VaadinSession
 import kotlinx.coroutines.*
 import org.asynchttpclient.AsyncCompletionHandler
 import org.asynchttpclient.BoundRequestBuilder
@@ -46,7 +49,7 @@ suspend fun BoundRequestBuilder.async(): String =
  */
 private data class VaadinDispatcher(val ui: UI) : CoroutineDispatcher() {
     override fun dispatch(context: CoroutineContext, block: Runnable) {
-        ui.access(block)
+        ui.access(Command { block.run() })
     }
 }
 
@@ -61,8 +64,9 @@ private data class VaadinExceptionHandler(val ui: UI) : CoroutineExceptionHandle
     override fun handleException(context: CoroutineContext, exception: Throwable) {
         // send the exception to Vaadin
         ui.access {
-            if (ui.errorHandler != null) {
-                ui.errorHandler.error(ErrorEvent(exception))
+            val errorHandler: ErrorHandler? = VaadinSession.getCurrent().errorHandler
+            if (errorHandler != null) {
+                errorHandler.error(ErrorEvent(exception))
             } else {
                 throw exception
             }

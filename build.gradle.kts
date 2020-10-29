@@ -3,10 +3,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.4.10"
-    // need to use Gretty here because of https://github.com/johndevs/gradle-vaadin-plugin/issues/317
     id("org.gretty") version "3.0.3"
-    id("com.devsoap.plugin.vaadin") version "2.0.0.beta2"
+    war
+    id("com.vaadin") version "0.14.3.7"
 }
+
+val vaadin_version = "14.4.2"
 
 gretty {
     contextPath = "/"
@@ -14,7 +16,10 @@ gretty {
 }
 
 vaadin {
-    version = "8.12.0"
+    if (gradle.startParameter.taskNames.contains("stage")) {
+        productionMode = true
+    }
+    pnpmEnable = true
 }
 
 defaultTasks("clean", "build")
@@ -27,17 +32,21 @@ val staging by configurations.creating
 
 dependencies {
     // Karibu-DSL dependency
-    compile("com.github.mvysny.karibudsl:karibu-dsl-v8:1.0.3")
+    compile("com.github.mvysny.karibudsl:karibu-dsl:1.0.3")
 
     // include proper kotlin version
     compile(kotlin("stdlib-jdk8"))
 
-    // workaround until https://youtrack.jetbrains.com/issue/IDEA-178071 is fixed
-    compile("com.vaadin:vaadin-themes:${vaadin.version}")
-    compile("com.vaadin:vaadin-client-compiled:${vaadin.version}")
+    // Vaadin 14
+    implementation("com.vaadin:vaadin-core:${vaadin_version}") {
+        // Webjars are only needed when running in Vaadin 13 compatibility mode
+        listOf("com.vaadin.webjar", "org.webjars.bowergithub.insites",
+                "org.webjars.bowergithub.polymer", "org.webjars.bowergithub.polymerelements",
+                "org.webjars.bowergithub.vaadin", "org.webjars.bowergithub.webcomponents")
+                .forEach { exclude(group = it) }
+    }
+    providedCompile("javax.servlet:javax.servlet-api:3.1.0")
 
-    // since we're using async stuff, we need to push updated UI to the client
-    compile("com.vaadin:vaadin-push:${vaadin.version}")
     // adds support for cancelable coroutines
     compile("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8")
     // a http client which does not block
@@ -51,7 +60,7 @@ dependencies {
     // heroku app runner
     staging("com.heroku:webapp-runner:9.0.36.1")
 
-    testCompile("com.github.mvysny.kaributesting:karibu-testing-v8:1.2.5")
+    testCompile("com.github.mvysny.kaributesting:karibu-testing-v10:1.2.5")
     testCompile("com.github.mvysny.dynatest:dynatest-engine:0.19")
     testCompile("io.javalin:javalin:3.10.1")
 }

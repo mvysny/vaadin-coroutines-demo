@@ -1,7 +1,7 @@
 package org.test
 
-import com.vaadin.server.VaadinRequest
-import com.vaadin.server.VaadinServletRequest
+import com.vaadin.flow.server.VaadinRequest
+import com.vaadin.flow.server.VaadinServletRequest
 import org.asynchttpclient.DefaultAsyncHttpClient
 
 object RestClient {
