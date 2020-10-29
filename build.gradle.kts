@@ -54,8 +54,11 @@ dependencies {
 
     implementation("org.slf4j:slf4j-simple:1.7.30")
 
-    // simple REST support so that we can test the client
-    implementation("org.jboss.resteasy:resteasy-servlet-initializer:3.1.3.Final")
+    // simple REST support so that we can test the REST client
+    implementation("io.javalin:javalin:3.10.1") {
+        exclude(mapOf("group" to "org.eclipse.jetty"))
+        exclude(mapOf("group" to "org.eclipse.jetty.websocket"))
+    }
 
     // heroku app runner
     staging("com.heroku:webapp-runner:9.0.36.1")

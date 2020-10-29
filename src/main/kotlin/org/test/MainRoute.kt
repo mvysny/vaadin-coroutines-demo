@@ -5,15 +5,11 @@ import com.vaadin.flow.component.DetachEvent
 import com.vaadin.flow.component.UI
 import com.vaadin.flow.component.notification.Notification
 import com.vaadin.flow.component.notification.NotificationVariant
-import com.vaadin.flow.component.page.Page
 import com.vaadin.flow.component.page.Push
 import com.vaadin.flow.router.Route
 import com.vaadin.flow.server.VaadinSession
 import kotlinx.coroutines.*
 import org.slf4j.LoggerFactory
-import javax.servlet.annotation.WebServlet
-import javax.ws.rs.ApplicationPath
-import javax.ws.rs.core.Application
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -103,6 +99,3 @@ private fun confirmationInfoBox(msg: String) {
         addThemeVariants(NotificationVariant.LUMO_SUCCESS, NotificationVariant.LUMO_PRIMARY)
     }.open()
 }
-
-@ApplicationPath("/rest")
-class ApplicationConfig : Application()

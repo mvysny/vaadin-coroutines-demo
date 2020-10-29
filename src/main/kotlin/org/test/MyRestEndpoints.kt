@@ -1,28 +1,33 @@
 package org.test
 
-import javax.ws.rs.GET
-import javax.ws.rs.POST
-import javax.ws.rs.Path
-import javax.ws.rs.Produces
-import javax.ws.rs.core.MediaType
+import io.javalin.Javalin
+import io.javalin.http.JavalinServlet
+import javax.servlet.annotation.WebServlet
+import javax.servlet.http.HttpServlet
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
-/**
- * Provides access to person list. To test, just run `curl http://localhost:8080/rest/person`
- */
-@Path("/tickets")
-class TicketsRest {
-    @GET()
-    @Path("/available")
-    @Produces(MediaType.TEXT_PLAIN)
-    fun free(): String {
-        Thread.sleep(1000) // simulate delay
-        return "25"
+@WebServlet(urlPatterns = ["/rest/*"], name = "MyRestServlet", asyncSupported = false)
+class MyRestServlet : HttpServlet() {
+    val javalin: JavalinServlet = Javalin.createStandalone()
+            .get("/rest") { ctx -> ctx.result("Hello!") }
+            .apply {
+                ticketsRestAPI(1000)
+            }
+            .servlet()
+
+    override fun service(req: HttpServletRequest, resp: HttpServletResponse) {
+        javalin.service(req, resp)
     }
+}
 
-    @POST()
-    @Path("/purchase")
-    fun cancel() {
-        Thread.sleep(3000) // simulate delay
+fun Javalin.ticketsRestAPI(serviceDurationMs: Long = 50) {
+    get("/rest/tickets/available") { ctx ->
+        Thread.sleep(serviceDurationMs) // simulate delay
+        ctx.result("25")
+    }
+    post("/rest/tickets/purchase") { _ ->
+        Thread.sleep(serviceDurationMs) // simulate delay
         println("""
             ===================
             PURCHASED
