@@ -50,7 +50,7 @@ dependencies {
     // adds support for cancelable coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0")
     // a http client which does not block
-    implementation("org.asynchttpclient:async-http-client:2.0.37")
+    implementation("org.asynchttpclient:async-http-client:2.12.1")
 
     implementation("org.slf4j:slf4j-simple:1.7.30")
 
