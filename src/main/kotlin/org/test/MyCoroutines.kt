@@ -28,7 +28,7 @@ suspend fun BoundRequestBuilder.async(): String =
 
             @Throws(Exception::class)
             override fun onCompleted(response: Response): Response {
-                if (response.statusCode !in 200..299) {
+                if (response.statusCode != 200) {
                     cont.resumeWithException(RuntimeException("Got failure response: ${response.statusCode} ${response.statusText}"))
                 } else {
                     cont.resume(response.responseBody)
@@ -49,7 +49,7 @@ suspend fun BoundRequestBuilder.async(): String =
  */
 private data class VaadinDispatcher(val ui: UI) : CoroutineDispatcher() {
     override fun dispatch(context: CoroutineContext, block: Runnable) {
-        ui.access(Command { block.run() })
+        ui.access { block.run() }
     }
 }
 
