@@ -14,7 +14,7 @@ object RestClient {
     }
     /**
      * Checks whether there are still tickets available. Suspends until the response is available, then returns it.
-     * See [TicketsRest] for the server dummy implementation.
+     * See [ticketsRestAPI] for the server dummy implementation.
      */
     suspend fun getNumberOfAvailableTickets(): Int {
         checkUIThread()
