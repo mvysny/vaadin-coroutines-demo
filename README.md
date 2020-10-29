@@ -4,7 +4,7 @@
 
 # Vaadin Coroutines Demo
 
-Demoes the possibility to use coroutines in a Vaadin 8 app. Please read the [Vaadin and Kotlin Coroutines](https://mvysny.github.io/vaadin-and-kotlin-coroutines/)
+Demoes the possibility to use coroutines in a Vaadin 14 app. Please read the [Vaadin and Kotlin Coroutines](https://mvysny.github.io/vaadin-and-kotlin-coroutines/)
 blogpost for explanation of the ideas behind this project. 
 
 Uses [Karibu-DSL](https://github.com/mvysny/karibu-dsl); for more information about the
