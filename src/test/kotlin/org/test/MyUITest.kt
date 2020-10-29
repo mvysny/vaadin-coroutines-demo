@@ -1,9 +1,9 @@
 package org.test
 
 import com.github.mvysny.kaributesting.mockhttp.MockHttpEnvironment
-import com.github.mvysny.kaributesting.v8.*
+import com.github.mvysny.kaributesting.v10.*
 import com.github.mvysny.dynatest.DynaTest
-import com.vaadin.ui.Button
+import com.vaadin.flow.component.button.Button
 import io.javalin.Javalin
 import kotlin.test.expect
 
@@ -16,7 +16,11 @@ class MyUITest : DynaTest({
         MockHttpEnvironment.localPort = 23442
     }
     afterGroup { javalin.stop() }
-    beforeEach { MockVaadin.setup({ MyUI() }) }
+    lateinit var routes: Routes
+    beforeGroup {
+        routes = Routes().autoDiscoverViews("org.test")
+    }
+    beforeEach { MockVaadin.setup(routes) }
     afterEach { MockVaadin.tearDown() }
 
     test("canceling purchase does nothing if the purchase is not ongoing") {
