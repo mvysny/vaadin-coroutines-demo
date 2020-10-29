@@ -43,14 +43,14 @@
     },
     "devDependencies": {
       "webpack-babel-multi-target-plugin": "2.3.3",
-      "copy-webpack-plugin": "5.1.2",
+      "copy-webpack-plugin": "5.1.1",
       "compression-webpack-plugin": "4.0.1",
       "raw-loader": "3.1.0",
       "webpack-cli": "3.3.11",
       "webpack": "4.42.0",
       "chokidar": "^3.4.0",
       "webpack-merge": "4.2.2",
-      "webpack-dev-server": "3.11.0"
+      "webpack-dev-server": "3.10.3"
     },
     "hash": "2ff1a1a9f602ef640308d0c271932bd3630394a2cf6edf47cedbe6bede1c39a4"
   },
@@ -95,13 +95,13 @@
   },
   "devDependencies": {
     "webpack-babel-multi-target-plugin": "2.3.3",
-    "copy-webpack-plugin": "5.1.2",
+    "copy-webpack-plugin": "5.1.1",
     "compression-webpack-plugin": "4.0.1",
     "raw-loader": "3.1.0",
     "webpack-cli": "3.3.11",
     "webpack": "4.42.0",
     "chokidar": "^3.4.0",
     "webpack-merge": "4.2.2",
-    "webpack-dev-server": "3.11.0"
+    "webpack-dev-server": "3.10.3"
   }
 }
