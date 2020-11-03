@@ -7,6 +7,7 @@ import com.vaadin.flow.component.Tag
 import com.vaadin.flow.component.dependency.JsModule
 import com.vaadin.flow.component.dependency.NpmPackage
 import com.vaadin.flow.component.dialog.Dialog
+import com.vaadin.flow.component.progressbar.ProgressBar
 import com.vaadin.flow.shared.Registration
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -26,17 +27,18 @@ inline fun <T> withProgressDialog(message: String, block: ()->T): T {
     }
 }
 
-/**
- * https://vaadin.com/directory/component/vaadin-component-factoryvcf-progress-spinner
- */
-@Tag("vcf-progress-spinner")
-@NpmPackage("@vaadin-component-factory/vcf-progress-spinner", version = "1.0.1")
-@JsModule("@vaadin-component-factory/vcf-progress-spinner")
-class Spinner : Component()
-
 @VaadinDsl
-fun (@VaadinDsl HasComponents).spinner(block: (@VaadinDsl Spinner).() -> Unit = {}): Spinner
-        = init(Spinner(), block)
+public fun (@VaadinDsl HasComponents).progressBar(
+        min: Double = 0.0,
+        max: Double = 1.0,
+        value: Double = min,
+        indeterminate: Boolean = false,
+        block: (@VaadinDsl ProgressBar).() -> Unit = {}
+): ProgressBar {
+    val component = ProgressBar(min, max, value)
+    component.isIndeterminate = indeterminate
+    return init(component, block)
+}
 
 /**
  * A simple progress dialog. Use [withProgressDialog] to show the dialog.
@@ -45,10 +47,10 @@ class ProgressDialog(val message: String) : Dialog() {
     init {
         // the dialog is not modal on purpose, so that you can try the "Cancel" button.
         isResizable = false; isModal = false;
-        horizontalLayout {
+        verticalLayout {
             isMargin = true
-            spinner()
             span(message)
+            progressBar(indeterminate = true)
         }
     }
 }

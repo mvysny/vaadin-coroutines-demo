@@ -52,7 +52,7 @@
       "webpack-merge": "4.2.2",
       "webpack-dev-server": "3.11.0"
     },
-    "hash": "2ff1a1a9f602ef640308d0c271932bd3630394a2cf6edf47cedbe6bede1c39a4"
+    "hash": "89c88b68d0081b8a8071c6943c6a25f30d18bed33dae9bafd7b0c2d4e52e2c06"
   },
   "dependencies": {
     "lit-element": "^2.2.1",
@@ -66,7 +66,6 @@
     "@vaadin/vaadin-upload": "4.4.0",
     "@vaadin/vaadin-dialog": "2.5.2",
     "@vaadin/vaadin-select": "2.4.0",
-    "@vaadin-component-factory/vcf-progress-spinner": "1.0.1",
     "@vaadin/vaadin-app-layout": "2.2.0",
     "@vaadin/vaadin-item": "2.3.0",
     "@vaadin/vaadin-notification": "1.6.0",

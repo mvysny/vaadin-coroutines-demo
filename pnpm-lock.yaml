@@ -2,7 +2,6 @@ dependencies:
   '@polymer/iron-icon': 3.0.1
   '@polymer/iron-list': 3.1.0
   '@polymer/polymer': 3.2.0
-  '@vaadin-component-factory/vcf-progress-spinner': 1.0.1
   '@vaadin/vaadin-accordion': 1.2.0
   '@vaadin/vaadin-app-layout': 2.2.0
   '@vaadin/vaadin-button': 2.4.0
@@ -1122,16 +1121,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-6QlRuqsQ/Ox/aJEQWBEJG7A9+u7oSYl3mem/K8IzxXG/kAGbV1YPD9Bg9Zw3vyxC/YP+zONKwy8hGkSt1jxFMw==
-  /@vaadin-component-factory/vcf-progress-spinner/1.0.1:
-    dependencies:
-      '@polymer/polymer': 3.2.0
-      '@vaadin/vaadin-button': 2.4.0
-      '@vaadin/vaadin-element-mixin': 2.4.2
-      '@vaadin/vaadin-lumo-styles': 1.6.1
-      '@vaadin/vaadin-themable-mixin': 1.6.1
-    dev: false
-    resolution:
-      integrity: sha512-I69OgUvNQCxasXltXbU60+7taFPFYJHltF0n7j9Q8b499pUlFZvq6PL6CPgVadSh+p9xmpA4CIbiRUK0OBJUzg==
   /@vaadin/vaadin-accordion/1.2.0:
     dependencies:
       '@polymer/polymer': 3.2.0
@@ -3174,7 +3163,7 @@ packages:
       integrity: sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==
   /faye-websocket/0.10.0:
     dependencies:
-      websocket-driver: 0.6.5
+      websocket-driver: 0.7.4
     dev: true
     engines:
       node: '>=0.4.0'
@@ -6421,7 +6410,6 @@ specifiers:
   '@polymer/iron-icon': 3.0.1
   '@polymer/iron-list': 3.1.0
   '@polymer/polymer': 3.2.0
-  '@vaadin-component-factory/vcf-progress-spinner': 1.0.1
   '@vaadin/vaadin-accordion': 1.2.0
   '@vaadin/vaadin-app-layout': 2.2.0
   '@vaadin/vaadin-button': 2.4.0
