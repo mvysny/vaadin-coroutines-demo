@@ -8,7 +8,7 @@ plugins {
     id("com.vaadin") version "0.14.3.7"
 }
 
-val vaadin_version = "14.4.2"
+val vaadin_version = "14.4.3"
 
 gretty {
     contextPath = "/"
