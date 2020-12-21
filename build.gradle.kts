@@ -2,13 +2,13 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.4.20"
+    kotlin("jvm") version "1.4.21"
     id("org.gretty") version "3.0.3"
     war
     id("com.vaadin") version "0.14.3.7"
 }
 
-val vaadin_version = "14.4.3"
+val vaadin_version = "14.4.4"
 
 gretty {
     contextPath = "/"
@@ -32,7 +32,7 @@ val staging by configurations.creating
 
 dependencies {
     // Karibu-DSL dependency
-    implementation("com.github.mvysny.karibudsl:karibu-dsl:1.0.3")
+    implementation("com.github.mvysny.karibudsl:karibu-dsl:1.0.4")
 
     // include proper kotlin version
     implementation(kotlin("stdlib-jdk8"))
