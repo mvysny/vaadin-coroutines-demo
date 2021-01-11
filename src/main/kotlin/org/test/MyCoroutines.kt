@@ -54,8 +54,9 @@ private data class VaadinDispatcher(val ui: UI) : CoroutineDispatcher() {
 }
 
 /**
- * If the coroutine fails, redirect the exception to the Vaadin Error Handler (the [UI.errorHandler] if specified; if not,
- * Vaadin will just log the exception).
+ * If the coroutine fails, redirect the exception to the Vaadin Error Handler
+ * (the [VaadinSession.errorHandler] if set; if not,
+ * the handler will simply rethrow the exception).
  */
 private data class VaadinExceptionHandler(val ui: UI) : CoroutineExceptionHandler {
     override val key: CoroutineContext.Key<*>
