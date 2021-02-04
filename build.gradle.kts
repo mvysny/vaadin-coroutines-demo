@@ -2,13 +2,13 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.4.21"
+    kotlin("jvm") version "1.4.30"
     id("org.gretty") version "3.0.3"
     war
     id("com.vaadin") version "0.14.3.7"
 }
 
-val vaadin_version = "14.4.4"
+val vaadin_version = "14.4.6"
 
 gretty {
     contextPath = "/"
@@ -63,7 +63,7 @@ dependencies {
     // heroku app runner
     staging("com.heroku:webapp-runner:9.0.36.1")
 
-    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.2.6")
+    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.2.8")
     testImplementation("com.github.mvysny.dynatest:dynatest-engine:0.19")
     testImplementation("io.javalin:javalin:3.12.0")
 }
