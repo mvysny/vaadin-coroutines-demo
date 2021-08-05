@@ -2,7 +2,7 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.4.30"
+    kotlin("jvm") version "1.5.21"
     id("org.gretty") version "3.0.6"
     war
     id("com.vaadin") version "0.14.6.0"
@@ -32,7 +32,7 @@ val staging by configurations.creating
 
 dependencies {
     // Karibu-DSL dependency
-    implementation("com.github.mvysny.karibudsl:karibu-dsl:1.0.4")
+    implementation("com.github.mvysny.karibudsl:karibu-dsl:1.0.7")
 
     // include proper kotlin version
     implementation(kotlin("stdlib-jdk8"))
@@ -48,7 +48,7 @@ dependencies {
     providedCompile("javax.servlet:javax.servlet-api:3.1.0")
 
     // adds support for cancelable coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
     // a http client which does not block
     implementation("org.asynchttpclient:async-http-client:2.12.1")
 
