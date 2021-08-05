@@ -35,12 +35,12 @@ dependencies:
   '@vaadin/vaadin-time-picker': 2.4.0
   '@vaadin/vaadin-upload': 4.4.1
   '@webcomponents/webcomponentsjs': 2.6.0
+  construct-style-sheets-polyfill: 2.4.16
   lit-element: 2.5.1
   lit-html: 1.4.1
 devDependencies:
   chokidar: 3.5.2
   compression-webpack-plugin: 4.0.1_webpack@4.42.0
-  construct-style-sheets-polyfill: 2.4.6
   copy-webpack-plugin: 5.1.2_webpack@4.42.0
   css-loader: 4.2.1_webpack@4.42.0
   extra-watch-webpack-plugin: 1.0.3
@@ -3256,10 +3256,10 @@ packages:
     dev: true
     resolution:
       integrity: sha1-wguW2MYXdIqvHBYCF2DNJ/y4y3U=
-  /construct-style-sheets-polyfill/2.4.6:
-    dev: true
+  /construct-style-sheets-polyfill/2.4.16:
+    dev: false
     resolution:
-      integrity: sha512-lU0to7dFDjKslMF+M5NUa4s0RQMBRVyZMXvD/vp7vmjdEPgziTkHSfZHQxfoIvVWajWRJUVJMLfrMwcx8fTh4A==
+      integrity: sha512-gaXX8c0IcLpTNj6q6TCKnhBJ1wuzmWEIrjp3pc1XfXS57WnvB3rVeAvsqYwyGOdPNdZiZYFyCOLgYbKKjhHIFg==
   /content-disposition/0.5.3:
     dependencies:
       safe-buffer: 5.1.2
@@ -7729,7 +7729,7 @@ specifiers:
   '@webcomponents/webcomponentsjs': ^2.2.10
   chokidar: ^3.5.0
   compression-webpack-plugin: 4.0.1
-  construct-style-sheets-polyfill: 2.4.6
+  construct-style-sheets-polyfill: 2.4.16
   copy-webpack-plugin: 5.1.2
   css-loader: 4.2.1
   extra-watch-webpack-plugin: 1.0.3

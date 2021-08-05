@@ -29,13 +29,13 @@ class MyUITest : DynaTest({
 
     test("purchase ticket shows a dialog") {
         _get<Button> { caption = "Buy Ticket" } ._click()
-        MockVaadin.runUIQueue()
+        MockVaadin.clientRoundtrip()
         expect("Checking Available Tickets, Please Wait") { _get<ProgressDialog>().message }
     }
 
     test("purchase ticket shows a purchase confirmation dialog") {
         _get<Button> { caption = "Buy Ticket" } ._click()
-        MockVaadin.runUIQueue()
+        MockVaadin.clientRoundtrip()
         Thread.sleep(50)
         retry {
             expect("There are 25 available tickets. Would you like to purchase one?") { _get<ConfirmDialog>().message }
@@ -44,14 +44,14 @@ class MyUITest : DynaTest({
 
     test("clicking No throws an exception but doesn't prevent another coroutine to be created") {
         _get<Button> { caption = "Buy Ticket" } ._click()
-        MockVaadin.runUIQueue()
+        MockVaadin.clientRoundtrip()
         Thread.sleep(50)
         retry {
             _get<ConfirmDialog>()._get<Button> { caption = "No" }._click()
         }
         MockVaadin.runUIQueue(true)
         _get<Button> { caption = "Buy Ticket" } ._click()
-        MockVaadin.runUIQueue()
+        MockVaadin.clientRoundtrip()
         expect("Checking Available Tickets, Please Wait") { _get<ProgressDialog>().message }
     }
 })
