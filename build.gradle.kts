@@ -2,7 +2,7 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.5.21"
+    kotlin("jvm") version "1.5.30"
     id("org.gretty") version "3.0.6"
     war
     id("com.vaadin") version "0.14.6.0"
@@ -32,7 +32,7 @@ val staging by configurations.creating
 
 dependencies {
     // Karibu-DSL dependency
-    implementation("com.github.mvysny.karibudsl:karibu-dsl:1.0.7")
+    implementation("com.github.mvysny.karibudsl:karibu-dsl:1.0.8")
 
     // include proper kotlin version
     implementation(kotlin("stdlib-jdk8"))
