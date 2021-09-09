@@ -1,6 +1,7 @@
 package org.test
 
 import com.github.mvysny.karibudsl.v10.*
+import com.github.mvysny.kaributools.setPrimary
 import com.vaadin.flow.component.Component
 import com.vaadin.flow.component.HasComponents
 import com.vaadin.flow.component.Tag

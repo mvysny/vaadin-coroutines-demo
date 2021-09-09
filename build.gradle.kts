@@ -10,6 +10,8 @@ plugins {
 
 val vaadin_version = "14.6.8"
 
+defaultTasks("clean", "build")
+
 gretty {
     contextPath = "/"
     servletContainer = "jetty9.4"
@@ -22,7 +24,10 @@ vaadin {
     pnpmEnable = true
 }
 
-defaultTasks("clean", "build")
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
 
 repositories {
     mavenCentral()
@@ -32,7 +37,7 @@ val staging by configurations.creating
 
 dependencies {
     // Karibu-DSL dependency
-    implementation("com.github.mvysny.karibudsl:karibu-dsl:1.0.8")
+    implementation("com.github.mvysny.karibudsl:karibu-dsl:1.1.0")
 
     // include proper kotlin version
     implementation(kotlin("stdlib-jdk8"))
@@ -63,7 +68,7 @@ dependencies {
     // heroku app runner
     staging("com.heroku:webapp-runner:9.0.36.1")
 
-    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.3.1")
+    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.3.2")
     testImplementation("com.github.mvysny.dynatest:dynatest-engine:0.20")
     testImplementation("io.javalin:javalin:3.13.10")
 }
