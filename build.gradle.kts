@@ -2,13 +2,13 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.5.30"
+    kotlin("jvm") version "1.5.31"
     id("org.gretty") version "3.0.6"
     war
     id("com.vaadin") version "0.14.6.0"
 }
 
-val vaadin_version = "14.6.8"
+val vaadin_version = "14.7.2"
 
 defaultTasks("clean", "build")
 
@@ -37,7 +37,7 @@ val staging by configurations.creating
 
 dependencies {
     // Karibu-DSL dependency
-    implementation("com.github.mvysny.karibudsl:karibu-dsl:1.1.0")
+    implementation("com.github.mvysny.karibudsl:karibu-dsl:1.1.1")
 
     // include proper kotlin version
     implementation(kotlin("stdlib-jdk8"))
@@ -66,10 +66,10 @@ dependencies {
     }
 
     // heroku app runner
-    staging("com.heroku:webapp-runner:9.0.36.1")
+    staging("com.heroku:webapp-runner:9.0.52.0")
 
-    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.3.2")
-    testImplementation("com.github.mvysny.dynatest:dynatest-engine:0.20")
+    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.3.4")
+    testImplementation("com.github.mvysny.dynatest:dynatest:0.22")
     testImplementation("io.javalin:javalin:3.13.10")
 }
 
