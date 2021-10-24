@@ -53,14 +53,14 @@ dependencies {
     providedCompile("javax.servlet:javax.servlet-api:3.1.0")
 
     // adds support for cancelable coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
     // a http client which does not block
     implementation("org.asynchttpclient:async-http-client:2.12.3")
 
     implementation("org.slf4j:slf4j-simple:1.7.32")
 
     // simple REST support so that we can test the REST client
-    implementation("io.javalin:javalin:3.13.10") {
+    implementation("io.javalin:javalin:4.1.1") {
         exclude(mapOf("group" to "org.eclipse.jetty"))
         exclude(mapOf("group" to "org.eclipse.jetty.websocket"))
     }
@@ -70,7 +70,7 @@ dependencies {
 
     testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.3.4")
     testImplementation("com.github.mvysny.dynatest:dynatest:0.22")
-    testImplementation("io.javalin:javalin:3.13.10")
+    testImplementation("io.javalin:javalin:4.1.1")
 }
 
 tasks.withType<Test> {

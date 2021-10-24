@@ -12,7 +12,7 @@ class MyRestServlet : HttpServlet() {
     val javalin: JavalinServlet = Javalin.createStandalone()
             .get("/rest") { ctx -> ctx.result("Hello!") }
             .apply { ticketsRestAPI(1000) }
-            .servlet()
+            .javalinServlet()
 
     override fun service(req: HttpServletRequest, resp: HttpServletResponse) {
         javalin.service(req, resp)
