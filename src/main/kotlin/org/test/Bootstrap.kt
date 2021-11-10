@@ -2,6 +2,8 @@ package org.test
 
 import com.vaadin.flow.component.notification.Notification
 import com.vaadin.flow.component.notification.NotificationVariant
+import com.vaadin.flow.component.page.AppShellConfigurator
+import com.vaadin.flow.component.page.Push
 import com.vaadin.flow.server.ErrorHandler
 import com.vaadin.flow.server.ServiceInitEvent
 import com.vaadin.flow.server.VaadinServiceInitListener
@@ -25,3 +27,6 @@ class Bootstrap : VaadinServiceInitListener {
         private val log: Logger = LoggerFactory.getLogger(Bootstrap::class.java)
     }
 }
+
+@Push
+class MyApp : AppShellConfigurator

@@ -5,7 +5,6 @@ import com.vaadin.flow.component.DetachEvent
 import com.vaadin.flow.component.UI
 import com.vaadin.flow.component.notification.Notification
 import com.vaadin.flow.component.notification.NotificationVariant
-import com.vaadin.flow.component.page.Push
 import com.vaadin.flow.router.Route
 import com.vaadin.flow.server.VaadinSession
 import kotlinx.coroutines.*
@@ -19,7 +18,6 @@ import kotlin.coroutines.CoroutineContext
  * The UI is initialized using [init]. This method is intended to be
  * overridden to add component to the user interface and initialize non-component functionality.
  */
-@Push
 @Route("")
 class MainRoute : KComposite(), CoroutineScope {
 

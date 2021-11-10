@@ -5,10 +5,10 @@ plugins {
     kotlin("jvm") version "1.5.31"
     id("org.gretty") version "3.0.6"
     war
-    id("com.vaadin") version "0.14.7.3"
+    id("com.vaadin") version "21.0.4"
 }
 
-val vaadin_version = "14.7.4"
+val vaadin_version = "21.0.4"
 
 defaultTasks("clean", "build")
 
@@ -21,7 +21,6 @@ vaadin {
     if (gradle.startParameter.taskNames.contains("stage")) {
         productionMode = true
     }
-    pnpmEnable = true
 }
 
 java {
