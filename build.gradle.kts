@@ -5,10 +5,10 @@ plugins {
     kotlin("jvm") version "1.5.31"
     id("org.gretty") version "3.0.6"
     war
-    id("com.vaadin") version "0.14.6.0"
+    id("com.vaadin") version "0.14.7.3"
 }
 
-val vaadin_version = "14.7.2"
+val vaadin_version = "14.7.4"
 
 defaultTasks("clean", "build")
 
@@ -68,7 +68,7 @@ dependencies {
     // heroku app runner
     staging("com.heroku:webapp-runner:9.0.52.0")
 
-    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.3.4")
+    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.3.5")
     testImplementation("com.github.mvysny.dynatest:dynatest:0.22")
     testImplementation("io.javalin:javalin:4.1.1")
 }
