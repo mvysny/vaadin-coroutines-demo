@@ -6,7 +6,7 @@ import com.github.mvysny.kaributesting.v10.MockVaadin
  * Retries given [block] for at most [maxDuration] millis until the block
  * finishes successfully (doesn't throw an exception).
  */
-fun retry(maxDuration: Long = 500, block: ()->Unit) {
+fun retry(maxDuration: Long = 1000, block: ()->Unit) {
     check(maxDuration > 10) { "$maxDuration must be greater than 10" }
     val start = System.currentTimeMillis()
     var lastThrowable: Throwable? = null
