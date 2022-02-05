@@ -2,13 +2,7 @@ package org.test
 
 import com.github.mvysny.karibudsl.v10.*
 import com.github.mvysny.kaributools.setPrimary
-import com.vaadin.flow.component.Component
-import com.vaadin.flow.component.HasComponents
-import com.vaadin.flow.component.Tag
-import com.vaadin.flow.component.dependency.JsModule
-import com.vaadin.flow.component.dependency.NpmPackage
 import com.vaadin.flow.component.dialog.Dialog
-import com.vaadin.flow.component.progressbar.ProgressBar
 import com.vaadin.flow.shared.Registration
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -16,6 +10,10 @@ import kotlin.coroutines.resume
 
 /**
  * Runs given block with a progress dialog being shown. When the block finishes, the dialog is automatically closed.
+ *
+ * WARNING: [block] must call a suspend function, otherwise the progress dialog is
+ * both shown and hidden in the same request, which causes Vaadin to NOT show
+ * the dialog at all.
  */
 inline fun <T> withProgressDialog(message: String, block: ()->T): T {
     checkUIThread()
@@ -26,19 +24,6 @@ inline fun <T> withProgressDialog(message: String, block: ()->T): T {
     } finally {
         dlg.close()
     }
-}
-
-@VaadinDsl
-public fun (@VaadinDsl HasComponents).progressBar(
-        min: Double = 0.0,
-        max: Double = 1.0,
-        value: Double = min,
-        indeterminate: Boolean = false,
-        block: (@VaadinDsl ProgressBar).() -> Unit = {}
-): ProgressBar {
-    val component = ProgressBar(min, max, value)
-    component.isIndeterminate = indeterminate
-    return init(component, block)
 }
 
 /**
@@ -89,7 +74,7 @@ class ConfirmDialog(val message: String, private val response: (confirmed: Boole
 
 /**
  * Opens a confirmation dialog and suspends; resumes when the dialog is closed or a button is clicked inside of the dialog.
- * Supports cancelation - closes the dialog automatically.
+ * Supports cancellation - closes the dialog automatically.
  * @return true if the user pressed yes, false if the user pressed no or closed the dialog.
  */
 suspend fun confirmDialog(message: String = "Are you sure?"): Boolean {
