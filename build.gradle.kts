@@ -5,10 +5,10 @@ plugins {
     kotlin("jvm") version "1.6.10"
     id("org.gretty") version "3.0.6"
     war
-    id("com.vaadin") version "21.0.4"
+    id("com.vaadin") version "23.0.0.beta1"
 }
 
-val vaadin_version = "21.0.4"
+val vaadin_version = "23.0.0.beta1"
 
 defaultTasks("clean", "build")
 
@@ -30,6 +30,7 @@ java {
 
 repositories {
     mavenCentral()
+    maven { setUrl("https://maven.vaadin.com/vaadin-prereleases") }
 }
 
 val staging by configurations.creating
@@ -41,13 +42,9 @@ dependencies {
     // include proper kotlin version
     implementation(kotlin("stdlib-jdk8"))
 
-    // Vaadin 14
+    // Vaadin
     implementation("com.vaadin:vaadin-core:${vaadin_version}") {
-        // Webjars are only needed when running in Vaadin 13 compatibility mode
-        listOf("com.vaadin.webjar", "org.webjars.bowergithub.insites",
-                "org.webjars.bowergithub.polymer", "org.webjars.bowergithub.polymerelements",
-                "org.webjars.bowergithub.vaadin", "org.webjars.bowergithub.webcomponents")
-                .forEach { exclude(group = it) }
+        exclude(module = "fusion-endpoint") // exclude fusion: it brings tons of dependencies (including swagger)
     }
     providedCompile("javax.servlet:javax.servlet-api:3.1.0")
 
