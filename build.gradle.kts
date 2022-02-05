@@ -46,14 +46,14 @@ dependencies {
     implementation("com.vaadin:vaadin-core:${vaadin_version}") {
         exclude(module = "fusion-endpoint") // exclude fusion: it brings tons of dependencies (including swagger)
     }
-    providedCompile("javax.servlet:javax.servlet-api:3.1.0")
+    providedCompile("javax.servlet:javax.servlet-api:4.0.1")
 
     // adds support for cancelable coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
     // a http client which does not block
     implementation("org.asynchttpclient:async-http-client:2.12.3")
 
-    implementation("org.slf4j:slf4j-simple:1.7.32")
+    implementation("org.slf4j:slf4j-simple:1.7.35")
 
     // simple REST support so that we can test the REST client
     implementation("io.javalin:javalin:4.1.1") {
