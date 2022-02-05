@@ -56,7 +56,7 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:1.7.35")
 
     // simple REST support so that we can test the REST client
-    implementation("io.javalin:javalin:4.1.1") {
+    implementation("io.javalin:javalin:4.3.0") {
         exclude(mapOf("group" to "org.eclipse.jetty"))
         exclude(mapOf("group" to "org.eclipse.jetty.websocket"))
     }
@@ -66,7 +66,7 @@ dependencies {
 
     testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.3.5")
     testImplementation("com.github.mvysny.dynatest:dynatest:0.24")
-    testImplementation("io.javalin:javalin:4.1.1")
+    testImplementation("io.javalin:javalin:4.3.0")
 }
 
 tasks.withType<Test> {
