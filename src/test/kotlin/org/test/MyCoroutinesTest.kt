@@ -5,9 +5,7 @@ import com.github.mvysny.dynatest.expectThrows
 import com.github.mvysny.kaributesting.v10.MockVaadin
 import com.vaadin.flow.server.ErrorHandler
 import com.vaadin.flow.server.VaadinSession
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.util.concurrent.ExecutionException
 import kotlin.coroutines.CoroutineContext
 import kotlin.test.expect
@@ -52,6 +50,21 @@ class MyCoroutinesTest : DynaTest({
             coroutineScope.launch {
                 throw RuntimeException("expected")
             }
+
+            // run the UI queue, which will run the launch{} block, throwing any exceptions out
+            // runUIQueue() wraps the exception in ExecutionException
+            expectThrows(ExecutionException::class, "expected") {
+                MockVaadin.runUIQueue()
+            }
+        }
+
+        test("exceptions thrown by suspendCancellableCoroutine() caught") {
+            coroutineScope.launch {
+                suspendCancellableCoroutine { cont: CancellableContinuation<Boolean> ->
+                    throw RuntimeException("expected")
+                }
+            }
+
             // run the UI queue, which will run the launch{} block, throwing any exceptions out
             // runUIQueue() wraps the exception in ExecutionException
             expectThrows(ExecutionException::class, "expected") {
