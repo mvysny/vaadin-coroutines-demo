@@ -10,6 +10,9 @@ import com.vaadin.flow.server.VaadinServiceInitListener
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
+/**
+ * Initializes Vaadin app.
+ */
 class Bootstrap : VaadinServiceInitListener {
     override fun serviceInit(event: ServiceInitEvent) {
         event.source.addSessionInitListener {
