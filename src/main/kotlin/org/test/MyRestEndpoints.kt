@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
+/**
+ * A demo REST endpoints called by [RestClient].
+ */
 @WebServlet(urlPatterns = ["/rest/*"], name = "MyRestServlet", asyncSupported = false)
 class MyRestServlet : HttpServlet() {
     val javalin: JavalinServlet = Javalin.createStandalone()

@@ -4,6 +4,9 @@ import com.vaadin.flow.server.VaadinRequest
 import com.vaadin.flow.server.VaadinServletRequest
 import org.asynchttpclient.DefaultAsyncHttpClient
 
+/**
+ * Uses the AsyncHttpClient to call REST endpoints from Kotlin Coroutines.
+ */
 object RestClient {
     private val port: Int get() {
         val portEnv: String = System.getenv("PORT") ?: ""
