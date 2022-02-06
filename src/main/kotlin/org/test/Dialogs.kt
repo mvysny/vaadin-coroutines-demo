@@ -12,7 +12,7 @@ import kotlin.coroutines.resume
  * Runs given block with a progress dialog being shown. When the block finishes, the dialog is automatically closed.
  *
  * WARNING: [block] must call a suspend function, otherwise the progress dialog is
- * both shown and hidden in the same request, which causes Vaadin to NOT show
+ * both shown and hidden in the same HTTP request, which causes Vaadin to NOT show
  * the dialog at all.
  */
 inline fun <T> withProgressDialog(message: String, block: ()->T): T {
