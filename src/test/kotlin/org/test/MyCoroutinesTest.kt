@@ -19,15 +19,19 @@ class MyCoroutinesTest : DynaTest({
     beforeEach { MockVaadin.setup() }
     afterEach { MockVaadin.tearDown() }
 
+    lateinit var coroutineScope: CoroutineScope
+    beforeEach {
+        val uiCoroutineScope = SupervisorJob()
+        val uiCoroutineContext = vaadin()
+        coroutineScope = object : CoroutineScope {
+            override val coroutineContext: CoroutineContext
+                get() = uiCoroutineContext + uiCoroutineScope
+        }
+    }
+
     group("VaadinExceptionHandler") {
         test("exception thrown by launch() caught by VaadinExceptionHandler") {
-            val uiCoroutineScope = SupervisorJob()
-            val uiCoroutineContext = vaadin()
-            val coroutineScope = object : CoroutineScope {
-                override val coroutineContext: CoroutineContext
-                    get() = uiCoroutineContext + uiCoroutineScope
-            }
-
+            // prepare the ErrorHandler
             lateinit var caught: Throwable
             VaadinSession.getCurrent().errorHandler =
                 ErrorHandler { event -> caught = event.throwable }
@@ -35,6 +39,7 @@ class MyCoroutinesTest : DynaTest({
             coroutineScope.launch {
                 throw expected
             }
+
             // run the UI queue, which will run the launch{} block. Make sure
             // to propagate any exceptions to the errorHandler defined above, in order
             // to populate the `caught` variable properly.
@@ -44,13 +49,6 @@ class MyCoroutinesTest : DynaTest({
         }
 
         test("exception thrown by launch() caught by Karibu-Testing") {
-            val uiCoroutineScope = SupervisorJob()
-            val uiCoroutineContext = vaadin()
-            val coroutineScope = object : CoroutineScope {
-                override val coroutineContext: CoroutineContext
-                    get() = uiCoroutineContext + uiCoroutineScope
-            }
-
             coroutineScope.launch {
                 throw RuntimeException("expected")
             }
