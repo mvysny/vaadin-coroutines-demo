@@ -13,7 +13,7 @@ import kotlin.test.expect
 /**
  * Tests the basic properties of Vaadin+Coroutine integration
  */
-class MyCoroutinesTest : DynaTest({
+class VaadinCoroutineSupportTest : DynaTest({
     beforeEach { MockVaadin.setup() }
     afterEach { MockVaadin.tearDown() }
 
