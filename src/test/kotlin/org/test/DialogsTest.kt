@@ -9,6 +9,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
+import kotlin.test.expect
 
 class DialogsTest : DynaTest({
     beforeEach { MockVaadin.setup() }
@@ -26,6 +27,21 @@ class DialogsTest : DynaTest({
     }
 
     group("ConfirmDialog") {
+        test("smoke") {
+            ConfirmDialog("Foo") {}.open()
+            _expectOne<ConfirmDialog>()
+        }
+        test("clicking yes") {
+            var outcome: Boolean? = null
+            ConfirmDialog("Foo") { outcome = it }.open()
+            _get<Button> { caption = "Yes" } ._click()
+
+            _expectNone<ConfirmDialog>()
+            expect(true) { outcome }
+        }
+    }
+
+    group("confirmDialog") {
         test("clicking yes") {
             coroutineScope.launch {
                 if (confirmDialog("Foo")) {
