@@ -5,10 +5,10 @@ plugins {
     kotlin("jvm") version "1.6.10"
     id("org.gretty") version "3.0.6"
     war
-    id("com.vaadin") version "23.0.0.beta2"
+    id("com.vaadin") version "23.0.1"
 }
 
-val vaadin_version = "23.0.0.beta2"
+val vaadin_version = "23.0.1"
 
 defaultTasks("clean", "build")
 
@@ -38,7 +38,7 @@ val staging by configurations.creating
 dependencies {
     // Karibu-DSL dependency
     implementation("com.github.mvysny.karibudsl:karibu-dsl:1.1.1")
-    implementation("com.github.mvysny.karibu-tools:karibu-tools:0.9")
+    implementation("com.github.mvysny.karibu-tools:karibu-tools:0.10")
 
     // include proper kotlin version
     implementation(kotlin("stdlib-jdk8"))
@@ -65,7 +65,7 @@ dependencies {
     // heroku app runner
     staging("com.heroku:webapp-runner:9.0.52.1")
 
-    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.3.10")
+    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.3.11")
     testImplementation("com.github.mvysny.dynatest:dynatest:0.24")
     testImplementation("io.javalin:javalin:4.3.0")
 }
