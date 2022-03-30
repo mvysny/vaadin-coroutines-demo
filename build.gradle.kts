@@ -5,10 +5,10 @@ plugins {
     kotlin("jvm") version "1.6.10"
     id("org.gretty") version "3.0.6"
     war
-    id("com.vaadin") version "23.0.1"
+    id("com.vaadin") version "23.0.3"
 }
 
-val vaadin_version = "23.0.1"
+val vaadin_version = "23.0.3"
 
 defaultTasks("clean", "build")
 
