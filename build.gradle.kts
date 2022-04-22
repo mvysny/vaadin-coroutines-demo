@@ -2,13 +2,13 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.6.20"
+    kotlin("jvm") version "1.6.21"
     id("org.gretty") version "3.0.6"
     war
-    id("com.vaadin") version "23.0.5"
+    id("com.vaadin") version "23.0.6"
 }
 
-val vaadin_version = "23.0.5"
+val vaadin_version = "23.0.6"
 
 defaultTasks("clean", "build")
 
@@ -54,7 +54,7 @@ dependencies {
     // a http client which does not block
     implementation("org.asynchttpclient:async-http-client:2.12.3")
 
-    implementation("org.slf4j:slf4j-simple:1.7.35")
+    implementation("org.slf4j:slf4j-simple:1.7.36")
 
     // simple REST support so that we can test the REST client
     implementation("io.javalin:javalin:4.3.0") {
