@@ -2,7 +2,7 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.6.21"
+    kotlin("jvm") version "1.7.10"
     id("org.gretty") version "3.0.6"
     war
     id("com.vaadin") version "23.2.2"
@@ -47,7 +47,7 @@ dependencies {
     providedCompile("javax.servlet:javax.servlet-api:4.0.1")
 
     // adds support for cancelable coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     // a http client which does not block
     implementation("org.asynchttpclient:async-http-client:2.12.3")
 
