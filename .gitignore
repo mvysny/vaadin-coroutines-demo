@@ -5,7 +5,7 @@ build
 out
 target
 node_modules
-webpack.generated.js
+vite.generated.ts
 pnpmfile.js
 .npmrc
 frontend/generated

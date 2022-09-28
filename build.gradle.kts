@@ -5,10 +5,10 @@ plugins {
     kotlin("jvm") version "1.6.21"
     id("org.gretty") version "3.0.6"
     war
-    id("com.vaadin") version "23.1.0"
+    id("com.vaadin") version "23.2.2"
 }
 
-val vaadin_version = "23.1.0"
+val vaadin_version = "23.2.2"
 
 defaultTasks("clean", "build")
 
@@ -24,20 +24,19 @@ vaadin {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 repositories {
     mavenCentral()
-    maven { setUrl("https://maven.vaadin.com/vaadin-prereleases") }
 }
 
 val staging by configurations.creating
 
 dependencies {
     // Karibu-DSL dependency
-    implementation("com.github.mvysny.karibudsl:karibu-dsl:1.1.2")
+    implementation("com.github.mvysny.karibudsl:karibu-dsl:1.1.3")
     implementation("com.github.mvysny.karibu-tools:karibu-tools:0.11")
 
     // include proper kotlin version
@@ -63,7 +62,7 @@ dependencies {
     // heroku app runner
     staging("com.heroku:webapp-runner:9.0.52.1")
 
-    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.3.15")
+    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.3.20")
     testImplementation("com.github.mvysny.dynatest:dynatest:0.24")
     testImplementation("io.javalin:javalin:4.6.0")
 }
