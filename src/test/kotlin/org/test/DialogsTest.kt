@@ -34,7 +34,7 @@ class DialogsTest : DynaTest({
         test("clicking yes") {
             var outcome: Boolean? = null
             ConfirmDialog("Foo") { outcome = it }.open()
-            _get<Button> { caption = "Yes" } ._click()
+            _get<Button> { text = "Yes" } ._click()
 
             _expectNone<ConfirmDialog>()
             expect(true) { outcome }
@@ -52,7 +52,7 @@ class DialogsTest : DynaTest({
             }
 
             _expectOne<ConfirmDialog>()
-            _get<Button> { caption = "Yes" } ._click()
+            _get<Button> { text = "Yes" } ._click()
             expectNotifications("Yes!")
         }
 
@@ -66,7 +66,7 @@ class DialogsTest : DynaTest({
             }
 
             _expectOne<ConfirmDialog>()
-            _get<Button> { caption = "No" } ._click()
+            _get<Button> { text = "No" } ._click()
             expectNotifications("No!")
         }
 
