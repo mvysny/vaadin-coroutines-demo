@@ -18,15 +18,21 @@ import javax.servlet.annotation.WebListener
 @WebListener
 class Bootstrap : ServletContextListener {
     override fun contextInitialized(sce: ServletContextEvent?) {
+        log.info("Starting AsyncHttpClient")
         asyncHttpClient = DefaultAsyncHttpClient()
+        log.info("App started")
     }
 
     override fun contextDestroyed(sce: ServletContextEvent?) {
+        log.info("Closing AsyncHttpClient")
         asyncHttpClient?.close()
         asyncHttpClient = null
+        log.info("App stopped")
     }
 
     companion object {
+        @JvmStatic
+        private val log = LoggerFactory.getLogger(Bootstrap::class.java)
         @Volatile
         var asyncHttpClient: AsyncHttpClient? = null
     }
