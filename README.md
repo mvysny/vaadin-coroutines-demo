@@ -8,9 +8,9 @@ blogpost for explanation of the ideas behind this project.
 
 Uses [Karibu-DSL](https://github.com/mvysny/karibu-dsl); for more information about the
 Karibu-DSL framework please see [https://github.com/mvysny/karibu-dsl](https://github.com/mvysny/karibu-dsl).
-For more information on Vaadin please see [Vaadin Tutorial](https://vaadin.com/docs/-/part/framework/tutorial.html)
+For more information on Vaadin please see [Vaadin Tutorial](https://vaadin.com/docs/-/part/framework/tutorial.html).
 
-[Online demo](https://v-herd.eu/vaadin-coroutines-demo/)
+See [Online demo](https://v-herd.eu/vaadin-coroutines-demo/) for quick demo.
 
 # Getting Started
 
