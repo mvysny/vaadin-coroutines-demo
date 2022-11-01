@@ -17,12 +17,6 @@ gretty {
     servletContainer = "jetty9.4"
 }
 
-vaadin {
-    if (gradle.startParameter.taskNames.contains("stage")) {
-        productionMode = true
-    }
-}
-
 java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
@@ -31,8 +25,6 @@ java {
 repositories {
     mavenCentral()
 }
-
-val staging by configurations.creating
 
 dependencies {
     // Karibu-DSL dependency
@@ -59,9 +51,6 @@ dependencies {
         exclude(mapOf("group" to "org.eclipse.jetty.websocket"))
     }
 
-    // heroku app runner
-    staging("com.heroku:webapp-runner:9.0.52.1")
-
     testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.3.20")
     testImplementation("com.github.mvysny.dynatest:dynatest:0.24")
     testImplementation("io.javalin:javalin:4.6.0")
@@ -75,19 +64,3 @@ tasks.withType<Test> {
     }
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
-// Heroku
-tasks {
-    val copyToLib by registering(Copy::class) {
-        into("$buildDir/server")
-        from(staging) {
-            include("webapp-runner*")
-        }
-    }
-    val stage by registering {
-        dependsOn("build", copyToLib)
-    }
-}
