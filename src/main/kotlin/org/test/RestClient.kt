@@ -21,7 +21,7 @@ object RestClient {
      */
     suspend fun getNumberOfAvailableTickets(): Int {
         checkUIThread()
-        val response = DefaultAsyncHttpClient().prepareGet("http://localhost:$port/rest/tickets/available").async()
+        val response = Bootstrap.asyncHttpClient!!.prepareGet("http://localhost:$port/rest/tickets/available").async()
         return response.toInt()
     }
 
@@ -31,6 +31,6 @@ object RestClient {
      */
     suspend fun buyTicket() {
         checkUIThread()
-        DefaultAsyncHttpClient().preparePost("http://localhost:$port/rest/tickets/purchase").async()
+        Bootstrap.asyncHttpClient!!.preparePost("http://localhost:$port/rest/tickets/purchase").async()
     }
 }

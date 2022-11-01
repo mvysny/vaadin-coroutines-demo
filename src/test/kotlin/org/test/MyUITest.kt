@@ -28,14 +28,23 @@ fun DynaNodeGroup.usingJavalin() {
     afterGroup { server.stop() }
 }
 
-class MyUITest : DynaTest({
-    usingJavalin()
+@DynaTestDsl
+fun DynaNodeGroup.usingApp() {
     lateinit var routes: Routes
     beforeGroup {
         routes = Routes().autoDiscoverViews("org.test")
+        Bootstrap().contextInitialized(null)
+    }
+    afterGroup {
+        Bootstrap().contextDestroyed(null)
     }
     beforeEach { MockVaadin.setup(routes) }
     afterEach { MockVaadin.tearDown() }
+}
+
+class MyUITest : DynaTest({
+    usingJavalin()
+    usingApp()
 
     test("canceling purchase does nothing if the purchase is not ongoing") {
         _get<Button> { text = "Cancel Purchase" } ._click()
