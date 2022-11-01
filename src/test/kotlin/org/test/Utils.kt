@@ -12,7 +12,7 @@ fun retry(maxDuration: Long = 1000, block: ()->Unit) {
     var lastThrowable: Throwable? = null
     while (System.currentTimeMillis() < start + maxDuration) {
         try {
-            MockVaadin.runUIQueue()
+            MockVaadin.clientRoundtrip() // runUIQueue() doesn't clean up dialogs
             block()
             return
         } catch (t: Throwable) {
