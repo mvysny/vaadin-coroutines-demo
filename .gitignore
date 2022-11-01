@@ -6,6 +6,5 @@ out
 target
 node_modules
 vite.generated.ts
-pnpmfile.js
 .npmrc
 frontend/generated
