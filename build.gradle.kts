@@ -3,10 +3,10 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 plugins {
     kotlin("jvm") version "1.7.20"
     id("application")
-    id("com.vaadin") version "23.2.6"
+    id("com.vaadin") version "23.2.8"
 }
 
-val vaadin_version = "23.2.6"
+val vaadin_version = "23.2.8"
 
 defaultTasks("clean", "build")
 
