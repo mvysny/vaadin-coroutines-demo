@@ -22,8 +22,8 @@ repositories {
 dependencies {
     // Karibu-DSL dependency
     implementation("com.github.mvysny.karibudsl:karibu-dsl:1.1.3")
-    implementation("com.github.mvysny.karibu-tools:karibu-tools:0.11")
-    implementation("com.github.mvysny.vaadin-boot:vaadin-boot:10.1")
+    implementation("com.github.mvysny.karibu-tools:karibu-tools:0.14")
+    implementation("com.github.mvysny.vaadin-boot:vaadin-boot:10.3")
 
     // include proper kotlin version
     implementation(kotlin("stdlib-jdk8"))
@@ -45,7 +45,7 @@ dependencies {
         exclude(group = "com.fasterxml.jackson.core")
     }
 
-    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.3.21")
+    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.3.23")
     testImplementation("com.github.mvysny.dynatest:dynatest:0.24")
 }
 
