@@ -3,7 +3,6 @@ package org.test
 import com.github.mvysny.karibudsl.v10.*
 import com.github.mvysny.kaributools.setPrimary
 import com.vaadin.flow.component.dialog.Dialog
-import com.vaadin.flow.shared.Registration
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
@@ -47,28 +46,22 @@ class ProgressDialog(val message: String) : Dialog() {
  * When this closure is invoked, the dialog is already closed.
  */
 class ConfirmDialog(val message: String, private val response: (confirmed: Boolean) -> Unit) : Dialog() {
-    private val responseRegistration: Registration
     init {
         isResizable = true; isModal = false
-        responseRegistration = addDialogCloseActionListener { cancel(); response(false) }
+        addDialogCloseActionListener { close(); response(false) }
         verticalLayout {
             span(message)
             horizontalLayout {
                 content { align(right, middle) }
                 button("Yes") {
                     setPrimary()
-                    onLeftClick { cancel(); response(true) }
+                    onLeftClick { close(); response(true) }
                 }
                 button("No") {
-                    onLeftClick { cancel(); response(false) }
+                    onLeftClick { close(); response(false) }
                 }
             }
         }
-    }
-
-    fun cancel() {
-        responseRegistration.remove()
-        close()
     }
 }
 
@@ -82,6 +75,6 @@ suspend fun confirmDialog(message: String = "Are you sure?"): Boolean {
         checkUIThread()
         val dlg = ConfirmDialog(message) { response -> cont.resume(response) }
         dlg.open()
-        cont.invokeOnCancellation { checkUIThread(); dlg.cancel() }
+        cont.invokeOnCancellation { checkUIThread(); dlg.close() }
     }
 }
