@@ -50,7 +50,7 @@ class ConfirmDialog(val message: String, private val response: (confirmed: Boole
     private val responseRegistration: Registration
     init {
         isResizable = true; isModal = false
-        responseRegistration = addDialogCloseActionListener { response(false) }
+        responseRegistration = addDialogCloseActionListener { cancel(); response(false) }
         verticalLayout {
             span(message)
             horizontalLayout {
