@@ -4,14 +4,10 @@ import com.vaadin.flow.component.UI
 import com.vaadin.flow.server.ErrorEvent
 import com.vaadin.flow.server.ErrorHandler
 import com.vaadin.flow.server.VaadinSession
-import kotlinx.coroutines.*
-import org.asynchttpclient.AsyncCompletionHandler
-import org.asynchttpclient.BoundRequestBuilder
-import org.asynchttpclient.ListenableFuture
-import org.asynchttpclient.Response
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Runnable
 import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
 
 fun checkUIThread() {
     require(UI.getCurrent() != null) { "Not running in Vaadin UI thread" }

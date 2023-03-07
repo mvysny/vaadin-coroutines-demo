@@ -3,20 +3,20 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 plugins {
     kotlin("jvm") version "1.8.0"
     id("application")
-    id("com.vaadin") version "23.3.6"
+    id("com.vaadin") version "24.0.0"
 }
 
-val vaadin_version = "23.3.6"
+val vaadin_version = "24.0.0"
 
 defaultTasks("clean", "build")
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
+    kotlinOptions.jvmTarget = "17"
 }
 
 repositories {
@@ -25,9 +25,9 @@ repositories {
 
 dependencies {
     // Karibu-DSL dependency
-    implementation("com.github.mvysny.karibudsl:karibu-dsl:1.2.0")
+    implementation("com.github.mvysny.karibudsl:karibu-dsl:2.0.0")
     implementation("com.github.mvysny.karibu-tools:karibu-tools:0.14")
-    implementation("com.github.mvysny.vaadin-boot:vaadin-boot:10.3")
+    implementation("com.github.mvysny.vaadin-boot:vaadin-boot:11.0")
 
     // include proper kotlin version
     implementation(kotlin("stdlib-jdk8"))
@@ -43,13 +43,13 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:2.0.6")
 
     // simple REST support so that we can test the REST client
-    implementation("io.javalin:javalin:4.6.7") {
+    implementation("io.javalin:javalin:5.3.2") {
         exclude(group = "org.eclipse.jetty")
         exclude(group = "org.eclipse.jetty.websocket")
         exclude(group = "com.fasterxml.jackson.core")
     }
 
-    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v23:1.3.23")
+    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v23:2.0.2")
     testImplementation("com.github.mvysny.dynatest:dynatest:0.24")
 }
 
