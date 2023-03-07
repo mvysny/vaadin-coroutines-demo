@@ -60,7 +60,7 @@ class VaadinCoroutineSupportTest : DynaTest({
 
         test("exceptions thrown by suspendCancellableCoroutine() caught") {
             coroutineScope.launch {
-                suspendCancellableCoroutine { cont: CancellableContinuation<Boolean> ->
+                suspendCancellableCoroutine { _ ->
                     throw RuntimeException("expected")
                 }
             }
