@@ -1,4 +1,6 @@
 {
+  "name": "no-name",
+  "license": "UNLICENSED",
   "dependencies": {
     "@polymer/polymer": "3.5.1",
     "@vaadin/accordion": "24.0.0",
@@ -22,7 +24,6 @@
     "@vaadin/email-field": "24.0.0",
     "@vaadin/field-base": "24.0.0",
     "@vaadin/field-highlighter": "24.0.0",
-    "@vaadin/form": "./build/flow-frontend/form",
     "@vaadin/form-layout": "24.0.0",
     "@vaadin/grid": "24.0.0",
     "@vaadin/horizontal-layout": "24.0.0",
@@ -83,12 +84,9 @@
     "workbox-core": "6.5.4",
     "workbox-precaching": "6.5.4"
   },
-  "license": "UNLICENSED",
-  "name": "no-name",
   "vaadin": {
     "dependencies": {
       "@polymer/polymer": "3.5.1",
-      "@vaadin-component-factory/vcf-progress-spinner": "1.0.1",
       "@vaadin/accordion": "24.0.0",
       "@vaadin/app-layout": "24.0.0",
       "@vaadin/avatar": "24.0.0",
@@ -170,9 +168,10 @@
       "workbox-core": "6.5.4",
       "workbox-precaching": "6.5.4"
     },
-    "hash": "be47012852642e8e3f59a9ab2af6ca7837e8189d72f2683c94a6d52afdb3f04c"
+    "hash": "05df718a20608dc95fdb8ac27a344758f9323f16abffa11ee542242e8a1337c3"
   },
   "overrides": {
+    "@vaadin/bundles": "$@vaadin/bundles",
     "@vaadin/accordion": "$@vaadin/accordion",
     "@vaadin/app-layout": "$@vaadin/app-layout",
     "@vaadin/avatar": "$@vaadin/avatar",
@@ -182,6 +181,7 @@
     "@vaadin/checkbox-group": "$@vaadin/checkbox-group",
     "@vaadin/combo-box": "$@vaadin/combo-box",
     "@vaadin/component-base": "$@vaadin/component-base",
+    "@vaadin/confirm-dialog": "$@vaadin/confirm-dialog",
     "@vaadin/context-menu": "$@vaadin/context-menu",
     "@vaadin/custom-field": "$@vaadin/custom-field",
     "@vaadin/date-picker": "$@vaadin/date-picker",
@@ -200,12 +200,15 @@
     "@vaadin/integer-field": "$@vaadin/integer-field",
     "@vaadin/item": "$@vaadin/item",
     "@vaadin/list-box": "$@vaadin/list-box",
+    "@vaadin/lit-renderer": "$@vaadin/lit-renderer",
     "@vaadin/login": "$@vaadin/login",
     "@vaadin/menu-bar": "$@vaadin/menu-bar",
     "@vaadin/message-input": "$@vaadin/message-input",
     "@vaadin/message-list": "$@vaadin/message-list",
+    "@vaadin/multi-select-combo-box": "$@vaadin/multi-select-combo-box",
     "@vaadin/notification": "$@vaadin/notification",
     "@vaadin/number-field": "$@vaadin/number-field",
+    "@vaadin/overlay": "$@vaadin/overlay",
     "@vaadin/password-field": "$@vaadin/password-field",
     "@vaadin/polymer-legacy-adapter": "$@vaadin/polymer-legacy-adapter",
     "@vaadin/progress-bar": "$@vaadin/progress-bar",
@@ -214,29 +217,24 @@
     "@vaadin/select": "$@vaadin/select",
     "@vaadin/split-layout": "$@vaadin/split-layout",
     "@vaadin/tabs": "$@vaadin/tabs",
+    "@vaadin/tabsheet": "$@vaadin/tabsheet",
     "@vaadin/text-area": "$@vaadin/text-area",
     "@vaadin/text-field": "$@vaadin/text-field",
     "@vaadin/time-picker": "$@vaadin/time-picker",
+    "@vaadin/tooltip": "$@vaadin/tooltip",
     "@vaadin/upload": "$@vaadin/upload",
     "@vaadin/vaadin-development-mode-detector": "$@vaadin/vaadin-development-mode-detector",
     "@vaadin/vaadin-lumo-styles": "$@vaadin/vaadin-lumo-styles",
     "@vaadin/vaadin-material-styles": "$@vaadin/vaadin-material-styles",
     "@vaadin/router": "$@vaadin/router",
-    "@vaadin/vaadin-themable-mixin": "$@vaadin/vaadin-themable-mixin",
     "@vaadin/vaadin-usage-statistics": "$@vaadin/vaadin-usage-statistics",
     "@vaadin/vertical-layout": "$@vaadin/vertical-layout",
     "@vaadin/virtual-list": "$@vaadin/virtual-list",
-    "@vaadin/confirm-dialog": "$@vaadin/confirm-dialog",
-    "@polymer/polymer": "$@polymer/polymer",
     "@vaadin/common-frontend": "$@vaadin/common-frontend",
     "construct-style-sheets-polyfill": "$construct-style-sheets-polyfill",
-    "date-fns": "$date-fns",
     "lit": "$lit",
-    "@vaadin/bundles": "$@vaadin/bundles",
-    "@vaadin/lit-renderer": "$@vaadin/lit-renderer",
-    "@vaadin/multi-select-combo-box": "$@vaadin/multi-select-combo-box",
-    "@vaadin/tabsheet": "$@vaadin/tabsheet",
-    "@vaadin/tooltip": "$@vaadin/tooltip",
-    "@vaadin/overlay": "$@vaadin/overlay"
+    "@polymer/polymer": "$@polymer/polymer",
+    "@vaadin/vaadin-themable-mixin": "$@vaadin/vaadin-themable-mixin",
+    "date-fns": "$date-fns"
   }
 }
