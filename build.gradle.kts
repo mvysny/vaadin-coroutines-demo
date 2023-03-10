@@ -33,7 +33,13 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
 
     // Vaadin
-    implementation("com.vaadin:vaadin-core:${vaadin_version}")
+    implementation("com.vaadin:vaadin-core:${vaadin_version}") {
+        afterEvaluate {
+            if (vaadin.productionMode) {
+                exclude(module = "vaadin-dev")
+            }
+        }    
+    }
 
     // adds support for cancelable coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
