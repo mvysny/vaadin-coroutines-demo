@@ -3,10 +3,10 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 plugins {
     kotlin("jvm") version "1.8.20"
     id("application")
-    id("com.vaadin") version "24.0.4"
+    id("com.vaadin") version "24.1.0.rc1"
 }
 
-val vaadin_version = "24.0.4"
+val vaadin_version = "24.1.0.rc1"
 
 defaultTasks("clean", "build")
 
@@ -20,6 +20,7 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 }
 
 repositories {
+    maven { setUrl("https://maven.vaadin.com/vaadin-prereleases") }
     mavenCentral()
 }
 
@@ -27,7 +28,7 @@ dependencies {
     // Karibu-DSL dependency
     implementation("com.github.mvysny.karibudsl:karibu-dsl:2.0.0")
     implementation("com.github.mvysny.karibu-tools:karibu-tools:0.14")
-    implementation("com.github.mvysny.vaadin-boot:vaadin-boot:11.2")
+    implementation("com.github.mvysny.vaadin-boot:vaadin-boot:11.3")
 
     // include proper kotlin version
     implementation(kotlin("stdlib-jdk8"))
