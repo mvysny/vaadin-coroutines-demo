@@ -17,8 +17,8 @@ See [Online demo](https://v-herd.eu/vaadin-coroutines-demo/) for quick demo.
 To quickly start the app, make sure that you have Java 17+ JDK installed. Then, just type this into your terminal:
 
 ```bash
-git clone https://github.com/mvysny/vaadin-coroutine-demo
-cd vaadin-coroutine-demo
+git clone https://github.com/mvysny/vaadin-coroutines-demo
+cd vaadin-coroutines-demo
 ./gradlew build run
 ```
 
