@@ -6,7 +6,9 @@ import kotlinx.coroutines.future.await
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
+import java.net.http.HttpResponse
 import java.net.http.HttpResponse.BodyHandlers
+import java.util.concurrent.CompletableFuture
 
 /**
  * Uses the AsyncHttpClient to call REST endpoints from Kotlin Coroutines.
@@ -53,8 +55,8 @@ fun String.httpPost(body: String = ""): HttpRequest = HttpRequest.newBuilder(URI
  * @return the response body
  */
 suspend fun HttpClient.async(req: HttpRequest): String {
-    val future = sendAsync(req, BodyHandlers.ofString())
-    val response = future.await()
+    val future: CompletableFuture<HttpResponse<String>> = sendAsync(req, BodyHandlers.ofString())
+    val response: HttpResponse<String> = future.await()
     check(response.statusCode() == 200) { "Request $req failed with ${response.statusCode()}: ${response.body()}" }
     return response.body()
 }
