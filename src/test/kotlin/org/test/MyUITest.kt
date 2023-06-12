@@ -33,10 +33,6 @@ fun DynaNodeGroup.usingApp() {
     lateinit var routes: Routes
     beforeGroup {
         routes = Routes().autoDiscoverViews("org.test")
-        Bootstrap().contextInitialized(null)
-    }
-    afterGroup {
-        Bootstrap().contextDestroyed(null)
     }
     beforeEach { MockVaadin.setup(routes) }
     afterEach { MockVaadin.tearDown() }
