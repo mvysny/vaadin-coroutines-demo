@@ -12,7 +12,9 @@ import java.net.http.HttpResponse.BodyHandlers
  * Uses the AsyncHttpClient to call REST endpoints from Kotlin Coroutines.
  */
 object RestClient {
-    private val client: HttpClient = HttpClient.newHttpClient()
+    private val client: HttpClient = HttpClient.newBuilder()
+        .followRedirects(HttpClient.Redirect.NORMAL)
+        .build()
 
     private val port: Int get() {
         val portEnv: String = System.getenv("PORT") ?: ""
