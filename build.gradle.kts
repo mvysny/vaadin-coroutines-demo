@@ -1,12 +1,12 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
-    kotlin("jvm") version "1.8.21"
+    kotlin("jvm") version "1.9.0"
     id("application")
-    id("com.vaadin") version "24.1.0"
+    id("com.vaadin") version "24.1.3"
 }
 
-val vaadin_version = "24.1.0"
+val vaadin_version = "24.1.3"
 
 defaultTasks("clean", "build")
 
@@ -25,8 +25,8 @@ repositories {
 
 dependencies {
     // Karibu-DSL dependency
-    implementation("com.github.mvysny.karibudsl:karibu-dsl:2.0.0")
-    implementation("com.github.mvysny.karibu-tools:karibu-tools:0.14")
+    implementation("com.github.mvysny.karibudsl:karibu-dsl:2.0.1")
+    implementation("com.github.mvysny.karibu-tools:karibu-tools:0.15")
     implementation("com.github.mvysny.vaadin-boot:vaadin-boot:11.3")
 
     // include proper kotlin version
@@ -42,9 +42,9 @@ dependencies {
     }
 
     // adds support for cancelable coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")  // https://repo1.maven.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core/
 
-    implementation("org.slf4j:slf4j-simple:2.0.6")
+    implementation("org.slf4j:slf4j-simple:2.0.7")
 
     // simple REST support so that we can test the REST client
     implementation("io.javalin:javalin:5.3.2") {
@@ -53,14 +53,14 @@ dependencies {
         exclude(group = "com.fasterxml.jackson.core")
     }
 
-    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v23:2.0.2")
+    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v24:2.1.0")
     testImplementation("com.github.mvysny.dynatest:dynatest:0.24")
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
     testLogging {
-        // to see the exceptions of failed tests in Travis-CI console.
+        // to see the exceptions of failed tests in the CI console.
         exceptionFormat = TestExceptionFormat.FULL
     }
 }
