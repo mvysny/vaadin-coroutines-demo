@@ -32,7 +32,7 @@ dependencies {
     // Karibu-DSL dependency
     implementation("com.github.mvysny.karibudsl:karibu-dsl:2.0.1")
     implementation("com.github.mvysny.karibu-tools:karibu-tools:0.15")
-    implementation("com.github.mvysny.vaadin-boot:vaadin-boot:11.3")
+    implementation("com.github.mvysny.vaadin-boot:vaadin-boot:12.0")
 
     // include proper kotlin version
     implementation(kotlin("stdlib-jdk8"))

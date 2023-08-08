@@ -6,10 +6,8 @@ import com.github.mvysny.kaributesting.v10.*
 import com.github.mvysny.dynatest.DynaTest
 import com.github.mvysny.dynatest.DynaTestDsl
 import com.vaadin.flow.component.button.Button
-import io.javalin.Javalin
+import org.eclipse.jetty.ee10.webapp.WebAppContext
 import org.eclipse.jetty.server.Server
-import org.eclipse.jetty.util.resource.EmptyResource
-import org.eclipse.jetty.webapp.WebAppContext
 import kotlin.test.expect
 
 @DynaTestDsl
@@ -18,7 +16,8 @@ fun DynaNodeGroup.usingJavalin() {
     beforeGroup {
         MyRestServlet.serviceDurationMs = 50
         val ctx = WebAppContext()
-        ctx.baseResource = EmptyResource.INSTANCE
+        // This used to be EmptyResource, but it got removed in Jetty 12. Let's use some dummy resource instead.
+        ctx.baseResource = ctx.resourceFactory.newClassPathResource("org/test/VaadinCoroutineSupportTest.class")
         ctx.addServlet(MyRestServlet::class.java, "/rest/*")
         server = Server(23442)
         server.handler = ctx
