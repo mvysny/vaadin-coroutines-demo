@@ -51,7 +51,7 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:2.0.7")
 
     // simple REST support so that we can test the REST client
-    implementation("io.javalin:javalin:5.3.2") {
+    implementation("io.javalin:javalin:5.6.2") {
         exclude(group = "org.eclipse.jetty")
         exclude(group = "org.eclipse.jetty.websocket")
         exclude(group = "com.fasterxml.jackson.core")
