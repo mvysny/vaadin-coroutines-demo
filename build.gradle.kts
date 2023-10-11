@@ -31,7 +31,7 @@ repositories {
 dependencies {
     // Karibu-DSL dependency
     implementation("com.github.mvysny.karibudsl:karibu-dsl:2.1.0")
-    implementation("com.github.mvysny.vaadin-boot:vaadin-boot:12.0")
+    implementation("com.github.mvysny.vaadin-boot:vaadin-boot:12.1")
 
     // include proper kotlin version
     implementation(kotlin("stdlib-jdk8"))
