@@ -1,7 +1,7 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
-    kotlin("jvm") version "1.9.20"
+    kotlin("jvm") version "1.9.21"
     id("application")
     id("com.vaadin")
 }
@@ -24,7 +24,7 @@ repositories {
 dependencies {
     // Karibu-DSL dependency
     implementation("com.github.mvysny.karibudsl:karibu-dsl:2.1.0")
-    implementation("com.github.mvysny.vaadin-boot:vaadin-boot:12.1")
+    implementation("com.github.mvysny.vaadin-boot:vaadin-boot:12.2")
 
     // include proper kotlin version
     implementation(kotlin("stdlib-jdk8"))
