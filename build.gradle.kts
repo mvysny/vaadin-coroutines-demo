@@ -31,7 +31,7 @@ dependencies {
 
     // Vaadin
     implementation(libs.vaadin.core) {
-        if (vaadin.productionMode.get()) {
+        if (vaadin.effective.productionMode.get()) {
             exclude(module = "vaadin-dev")
         }
     }
