@@ -31,7 +31,7 @@ inline fun <T> withProgressDialog(message: String, block: ()->T): T {
 class ProgressDialog(val message: String) : Dialog() {
     init {
         // the dialog is not modal on purpose, so that you can try the "Cancel" button.
-        isResizable = false; isModal = false;
+        isResizable = false; isModal = false
         verticalLayout {
             isMargin = true
             span(message)
@@ -55,10 +55,10 @@ class ConfirmDialog(val message: String, private val response: (confirmed: Boole
                 content { align(right, middle) }
                 button("Yes") {
                     setPrimary()
-                    onLeftClick { close(); response(true) }
+                    onClick { close(); response(true) }
                 }
                 button("No") {
-                    onLeftClick { close(); response(false) }
+                    onClick { close(); response(false) }
                 }
             }
         }

@@ -38,13 +38,13 @@ class MainRoute : KComposite(), CoroutineScope {
     private val root = ui {
         verticalLayout {
             button("Buy Ticket") {
-                onLeftClick { job = purchaseTicket() }
+                onClick { job = purchaseTicket() }
             }
             button("Cancel Purchase") {
-                onLeftClick { job?.cancel() }
+                onClick { job?.cancel() }
             }
             button("Close session (must cancel all ongoing jobs)") {
-                onLeftClick { VaadinSession.getCurrent().close(); UI.getCurrent().page.reload() }
+                onClick { VaadinSession.getCurrent().close(); UI.getCurrent().page.reload() }
             }
         }
     }
