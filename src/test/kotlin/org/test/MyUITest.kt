@@ -17,7 +17,7 @@ fun DynaNodeGroup.usingJavalin() {
         MyRestServlet.serviceDurationMs = 50
         val ctx = WebAppContext()
         // This used to be EmptyResource, but it got removed in Jetty 12. Let's use some dummy resource instead.
-        ctx.baseResource = ctx.resourceFactory.newClassPathResource("org/test/VaadinCoroutineSupportTest.class")
+        ctx.baseResource = ctx.resourceFactory.newClassLoaderResource("java/lang/String.class")
         ctx.addServlet(MyRestServlet::class.java, "/rest/*")
         server = Server(23442)
         server.handler = ctx
