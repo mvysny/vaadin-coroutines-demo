@@ -1,7 +1,9 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.9.23"
+    kotlin("jvm") version "2.0.0"
     application
     alias(libs.plugins.vaadin)
 }
@@ -13,8 +15,8 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions.jvmTarget = "17"
+tasks.withType<KotlinCompile> {
+    compilerOptions.jvmTarget = JvmTarget.JVM_17
 }
 
 repositories {
