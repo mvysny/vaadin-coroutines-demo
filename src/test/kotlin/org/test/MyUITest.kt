@@ -1,10 +1,10 @@
 package org.test
 
 import com.github.mvysny.dynatest.DynaNodeGroup
-import com.github.mvysny.kaributesting.mockhttp.MockHttpEnvironment
 import com.github.mvysny.kaributesting.v10.*
 import com.github.mvysny.dynatest.DynaTest
 import com.github.mvysny.dynatest.DynaTestDsl
+import com.github.mvysny.fakeservlet.FakeHttpEnvironment
 import com.vaadin.flow.component.button.Button
 import org.eclipse.jetty.ee10.webapp.WebAppContext
 import org.eclipse.jetty.server.Server
@@ -22,7 +22,7 @@ fun DynaNodeGroup.usingJavalin() {
         server = Server(23442)
         server.handler = ctx
         server.start()
-        MockHttpEnvironment.localPort = 23442
+        FakeHttpEnvironment.localPort = 23442
     }
     afterGroup { server.stop() }
 }
