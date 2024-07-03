@@ -3,12 +3,11 @@
 
 # Vaadin + Kotlin Coroutines Demo
 
-Demoes the possibility to use Kotlin coroutines in a Vaadin app. Please read the [Vaadin and Kotlin Coroutines](https://mvysny.github.io/vaadin-and-kotlin-coroutines/)
+Demoes the possibility to use Kotlin coroutines in a [Vaadin](https://vaadin.com) app. Please read the [Vaadin and Kotlin Coroutines](https://mvysny.github.io/vaadin-and-kotlin-coroutines/)
 blogpost for explanation of the ideas behind this project. 
 
-Uses [Karibu-DSL](https://github.com/mvysny/karibu-dsl); for more information about the
-Karibu-DSL framework please see [https://github.com/mvysny/karibu-dsl](https://github.com/mvysny/karibu-dsl).
-For more information on Vaadin please see [Vaadin Tutorial](https://vaadin.com/docs/-/part/framework/tutorial.html).
+Uses [Karibu-DSL](https://github.com/mvysny/karibu-dsl).
+For more information on Vaadin please see [Vaadin Documentation](https://vaadin.com/docs/latest/).
 
 See [Online demo](https://v-herd.eu/vaadin-coroutines-demo/) for quick demo.
 
