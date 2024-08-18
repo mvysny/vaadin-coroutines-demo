@@ -1,56 +1,57 @@
 package org.test
 
-import com.github.mvysny.dynatest.DynaNodeGroup
 import com.github.mvysny.kaributesting.v10.*
-import com.github.mvysny.dynatest.DynaTest
-import com.github.mvysny.dynatest.DynaTestDsl
 import com.github.mvysny.fakeservlet.FakeHttpEnvironment
 import com.vaadin.flow.component.button.Button
 import org.eclipse.jetty.ee10.webapp.WebAppContext
 import org.eclipse.jetty.server.Server
+import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import kotlin.test.expect
 
-@DynaTestDsl
-fun DynaNodeGroup.usingJavalin() {
-    lateinit var server: Server
-    beforeGroup {
-        MyRestServlet.serviceDurationMs = 50
-        val ctx = WebAppContext()
-        // This used to be EmptyResource, but it got removed in Jetty 12. Let's use some dummy resource instead.
-        ctx.baseResource = ctx.resourceFactory.newClassLoaderResource("java/lang/String.class")
-        ctx.addServlet(MyRestServlet::class.java, "/rest/*")
-        server = Server(23442)
-        server.handler = ctx
-        server.start()
-        FakeHttpEnvironment.localPort = 23442
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class MyUITest {
+    companion object {
+        private lateinit var javalinServer: Server
+        @BeforeAll @JvmStatic fun startJavalin() {
+            MyRestServlet.serviceDurationMs = 50
+            val ctx = WebAppContext()
+            // This used to be EmptyResource, but it got removed in Jetty 12. Let's use some dummy resource instead.
+            ctx.baseResource =
+                ctx.resourceFactory.newClassLoaderResource("java/lang/String.class")
+            ctx.addServlet(MyRestServlet::class.java, "/rest/*")
+            javalinServer = Server(23442)
+            javalinServer.handler = ctx
+            javalinServer.start()
+            FakeHttpEnvironment.localPort = 23442
+        }
+
+        @AfterAll @JvmStatic fun stopJavalin() {
+            javalinServer.stop()
+        }
+
+        private lateinit var routes: Routes
+        @BeforeAll @JvmStatic fun discoverRoutes() {
+            routes = Routes().autoDiscoverViews("org.test")
+        }
     }
-    afterGroup { server.stop() }
-}
+    @BeforeEach fun mockVaadin() { MockVaadin.setup(routes) }
+    @AfterEach fun teardownVaadin() { MockVaadin.tearDown() }
 
-@DynaTestDsl
-fun DynaNodeGroup.usingApp() {
-    lateinit var routes: Routes
-    beforeGroup {
-        routes = Routes().autoDiscoverViews("org.test")
-    }
-    beforeEach { MockVaadin.setup(routes) }
-    afterEach { MockVaadin.tearDown() }
-}
-
-class MyUITest : DynaTest({
-    usingJavalin()
-    usingApp()
-
-    test("canceling purchase does nothing if the purchase is not ongoing") {
+    @Test fun `canceling purchase does nothing if the purchase is not ongoing`() {
         _get<Button> { text = "Cancel Purchase" } ._click()
     }
 
-    test("purchase ticket shows a dialog") {
+    @Test fun `purchase ticket shows a dialog`() {
         _get<Button> { text = "Buy Ticket" } ._click()
         expect("Checking Available Tickets, Please Wait") { _get<ProgressDialog>().message }
     }
 
-    test("purchase ticket shows a purchase confirmation dialog") {
+    @Test fun `purchase ticket shows a purchase confirmation dialog`() {
         _get<Button> { text = "Buy Ticket" } ._click()
         Thread.sleep(50)
         retry {
@@ -58,7 +59,7 @@ class MyUITest : DynaTest({
         }
     }
 
-    test("clicking No throws an exception but doesn't prevent another coroutine to be created") {
+    @Test fun `clicking No throws an exception but doesn't prevent another coroutine to be created`() {
         _get<Button> { text = "Buy Ticket" } ._click()
         Thread.sleep(50)
         retry {
@@ -69,4 +70,4 @@ class MyUITest : DynaTest({
         MockVaadin.clientRoundtrip()
         expect("Checking Available Tickets, Please Wait") { _get<ProgressDialog>().message }
     }
-})
+}

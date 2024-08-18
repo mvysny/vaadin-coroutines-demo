@@ -1,11 +1,10 @@
 package org.test
 
-import com.github.mvysny.dynatest.DynaTest
-import com.github.mvysny.dynatest.expectThrows
 import com.github.mvysny.kaributesting.v10.MockVaadin
 import com.vaadin.flow.server.ErrorHandler
 import com.vaadin.flow.server.VaadinSession
 import kotlinx.coroutines.*
+import org.junit.jupiter.api.*
 import java.util.concurrent.ExecutionException
 import kotlin.coroutines.CoroutineContext
 import kotlin.test.expect
@@ -13,12 +12,12 @@ import kotlin.test.expect
 /**
  * Tests the basic properties of Vaadin+Coroutine integration
  */
-class VaadinCoroutineSupportTest : DynaTest({
-    beforeEach { MockVaadin.setup() }
-    afterEach { MockVaadin.tearDown() }
+class VaadinCoroutineSupportTest {
+    @BeforeEach @Order(0) fun setup() { MockVaadin.setup() }
+    @AfterEach fun teardown() { MockVaadin.tearDown() }
 
-    lateinit var coroutineScope: CoroutineScope
-    beforeEach {
+    private lateinit var coroutineScope: CoroutineScope
+    @BeforeEach @Order(1) fun setupCoroutines() {
         val uiCoroutineScope = SupervisorJob()
         val uiCoroutineContext = vaadin()
         coroutineScope = object : CoroutineScope {
@@ -27,8 +26,8 @@ class VaadinCoroutineSupportTest : DynaTest({
         }
     }
 
-    group("VaadinExceptionHandler") {
-        test("exception thrown by launch() caught by VaadinExceptionHandler") {
+    @Nested inner class VaadinExceptionHandler() {
+        @Test fun `exception thrown by launch() caught by VaadinExceptionHandler`() {
             // prepare the ErrorHandler
             lateinit var caught: Throwable
             VaadinSession.getCurrent().errorHandler =
@@ -46,19 +45,20 @@ class VaadinCoroutineSupportTest : DynaTest({
             expect(expected) { caught }
         }
 
-        test("exception thrown by launch() caught by Karibu-Testing") {
+        @Test fun `exception thrown by launch() caught by Karibu-Testing`() {
             coroutineScope.launch {
                 throw RuntimeException("expected")
             }
 
             // run the UI queue, which will run the launch{} block, throwing any exceptions out
             // runUIQueue() wraps the exception in ExecutionException
-            expectThrows(ExecutionException::class, "expected") {
+            val ex = assertThrows<ExecutionException> {
                 MockVaadin.runUIQueue()
             }
+            expect("expected") { ex.message }
         }
 
-        test("exceptions thrown by suspendCancellableCoroutine() caught") {
+        @Test fun `exceptions thrown by suspendCancellableCoroutine() caught`() {
             coroutineScope.launch {
                 suspendCancellableCoroutine { _ ->
                     throw RuntimeException("expected")
@@ -67,9 +67,10 @@ class VaadinCoroutineSupportTest : DynaTest({
 
             // run the UI queue, which will run the launch{} block, throwing any exceptions out
             // runUIQueue() wraps the exception in ExecutionException
-            expectThrows(ExecutionException::class, "expected") {
+            val ex = assertThrows<ExecutionException> {
                 MockVaadin.runUIQueue()
             }
+            expect("expected") { ex.message }
         }
     }
-})
+}

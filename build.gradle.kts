@@ -50,9 +50,9 @@ dependencies {
         exclude(group = "com.fasterxml.jackson.core")
     }
 
+    testImplementation(libs.junit)
     testImplementation(libs.karibu.testing)
-    testImplementation(libs.dynatest)
-    testRuntimeOnly(libs.junit.platform.launcher)
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.withType<Test> {
