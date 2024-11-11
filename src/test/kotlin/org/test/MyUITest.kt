@@ -28,6 +28,7 @@ class MyUITest {
             javalinServer.handler = ctx
             javalinServer.start()
             FakeHttpEnvironment.localPort = 23442
+            port = 23442
         }
 
         @AfterAll @JvmStatic fun stopJavalin() {

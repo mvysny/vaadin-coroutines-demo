@@ -18,13 +18,6 @@ object RestClient {
         .followRedirects(HttpClient.Redirect.NORMAL)
         .build()
 
-    private val port: Int get() {
-        val portEnv: String = System.getenv("PORT") ?: ""
-        if (portEnv.isNotBlank()) {
-            return portEnv.toInt()
-        }
-        return (VaadinRequest.getCurrent() as VaadinServletRequest).localPort
-    }
     /**
      * Checks whether there are still tickets available. Suspends until the response is available, then returns it.
      * See [MyRestServlet] for the server dummy implementation.
