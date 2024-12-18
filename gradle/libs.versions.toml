@@ -1,18 +1,18 @@
 [versions]
-vaadin = "24.5.3"
+vaadin = "24.6.0"
 # https://repo1.maven.org/maven2/org/slf4j/slf4j-api/
-slf4j = "2.0.13"
+slf4j = "2.0.16"
 
 [libraries]
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
 jetbrains-annotations = "org.jetbrains:annotations:24.1.0"
-vaadin-boot = "com.github.mvysny.vaadin-boot:vaadin-boot:13.2"
+vaadin-boot = "com.github.mvysny.vaadin-boot:vaadin-boot:13.3"
 vaadin-core = { module = "com.vaadin:vaadin-core", version.ref = "vaadin" }
 karibu-testing = "com.github.mvysny.kaributesting:karibu-testing-v24:2.2.0"
-karibu-dsl = "com.github.mvysny.karibudsl:karibu-dsl-v23:2.1.4"
+karibu-dsl = "com.github.mvysny.karibudsl:karibu-dsl-v23:2.2.0"
 # https://repo1.maven.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core/
-kotlinx-coroutines-core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0"
+kotlinx-coroutines-core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0"
 junit = "org.junit.jupiter:junit-jupiter-engine:5.11.0"
 javalin = "io.javalin:javalin:5.6.2"
 
