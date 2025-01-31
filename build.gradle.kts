@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "2.1.0"
+    kotlin("jvm") version "2.1.10"
     application
     alias(libs.plugins.vaadin)
 }
@@ -27,9 +27,6 @@ dependencies {
     // Karibu-DSL dependency
     implementation(libs.karibu.dsl)
     implementation(libs.vaadin.boot)
-
-    // include proper kotlin version
-    implementation(kotlin("stdlib-jdk8"))
 
     // Vaadin
     implementation(libs.vaadin.core) {
