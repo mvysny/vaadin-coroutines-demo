@@ -10,7 +10,7 @@ jetbrains-annotations = "org.jetbrains:annotations:24.1.0"
 vaadin-boot = "com.github.mvysny.vaadin-boot:vaadin-boot:13.3"
 vaadin-core = { module = "com.vaadin:vaadin-core", version.ref = "vaadin" }
 karibu-testing = "com.github.mvysny.kaributesting:karibu-testing-v24:2.2.4"
-karibu-dsl = "com.github.mvysny.karibudsl:karibu-dsl-v23:2.2.3"
+karibu-dsl = "com.github.mvysny.karibudsl:karibu-dsl-v23:2.3.2"
 # https://repo1.maven.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core/
 kotlinx-coroutines-core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0"
 junit = "org.junit.jupiter:junit-jupiter-engine:5.11.0"
