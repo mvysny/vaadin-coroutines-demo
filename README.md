@@ -13,7 +13,7 @@ See [Online demo](https://v-herd.eu/vaadin-coroutines-demo/) for quick demo.
 
 # Getting Started
 
-To quickly start the app, make sure that you have Java 17+ JDK installed. Then, just type this into your terminal:
+To quickly start the app, make sure that you have Java 21+ JDK installed. Then, just type this into your terminal:
 
 ```bash
 git clone https://github.com/mvysny/vaadin-coroutines-demo
