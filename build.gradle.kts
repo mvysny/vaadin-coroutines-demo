@@ -29,10 +29,9 @@ dependencies {
     implementation(libs.vaadin.boot)
 
     // Vaadin
-    implementation(libs.vaadin.core) {
-        if (vaadin.effective.productionMode.get()) {
-            exclude(module = "vaadin-dev")
-        }
+    implementation(libs.vaadin.core)
+    if (!vaadin.effective.productionMode.get()) {
+        implementation(libs.vaadin.dev)
     }
 
     // adds support for cancelable coroutines
