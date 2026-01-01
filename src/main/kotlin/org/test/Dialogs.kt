@@ -2,6 +2,7 @@ package org.test
 
 import com.github.mvysny.karibudsl.v10.*
 import com.github.mvysny.kaributools.setPrimary
+import com.vaadin.flow.component.ModalityMode
 import com.vaadin.flow.component.dialog.Dialog
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -47,7 +48,7 @@ class ProgressDialog(val message: String) : Dialog() {
  */
 class ConfirmDialog(val message: String, private val response: (confirmed: Boolean) -> Unit) : Dialog() {
     init {
-        isResizable = true; isModal = false
+        isResizable = true; modality = ModalityMode.MODELESS
         addDialogCloseActionListener { close(); response(false) }
         verticalLayout {
             span(message)
