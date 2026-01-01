@@ -46,8 +46,13 @@ fun String.httpPost(body: String = ""): HttpRequest = HttpRequest.newBuilder(URI
  * @return the response body
  */
 suspend fun HttpClient.async(req: HttpRequest): String {
-    val future: CompletableFuture<HttpResponse<String>> = sendAsync(req, BodyHandlers.ofString())
-    val response: HttpResponse<String> = future.await()
-    check(response.statusCode() == 200) { "Request $req failed with ${response.statusCode()}: ${response.body()}" }
-    return response.body()
+    try {
+        val future: CompletableFuture<HttpResponse<String>> = sendAsync(req, BodyHandlers.ofString())
+        val response: HttpResponse<String> = future.await()
+        check(response.statusCode() == 200) { "Request $req failed with ${response.statusCode()}: ${response.body()}" }
+        return response.body()
+    } catch (t: Throwable) {
+        t.printStackTrace()
+        throw t
+    }
 }

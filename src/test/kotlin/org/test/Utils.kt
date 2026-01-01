@@ -1,6 +1,9 @@
 package org.test
 
 import com.github.mvysny.kaributesting.v10.MockVaadin
+import org.eclipse.jetty.util.resource.Resource
+import java.net.URI
+import java.nio.file.Path
 
 /**
  * Retries given [block] for at most [maxDuration] millis until the block
@@ -21,4 +24,14 @@ fun retry(maxDuration: Long = 2000, block: ()->Unit) {
         Thread.sleep(50)
     }
     throw lastThrowable!!
+}
+
+class EmptyResource : Resource() {
+    override fun getPath(): Path? = null
+    override fun isDirectory(): Boolean = true
+    override fun isReadable(): Boolean = true
+    override fun getURI(): URI? = null
+    override fun getName(): String = "EmptyResource"
+    override fun getFileName(): String? = null
+    override fun resolve(subUriPath: String?): Resource? = null
 }

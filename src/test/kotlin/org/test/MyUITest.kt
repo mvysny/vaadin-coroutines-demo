@@ -20,9 +20,7 @@ class MyUITest {
         @BeforeAll @JvmStatic fun startJavalin() {
             MyRestServlet.serviceDurationMs = 50
             val ctx = WebAppContext()
-            // This used to be EmptyResource, but it got removed in Jetty 12. Let's use some dummy resource instead.
-            ctx.baseResource =
-                ctx.resourceFactory.newClassLoaderResource("java/lang/String.class")
+            ctx.baseResource = EmptyResource()
             ctx.addServlet(MyRestServlet::class.java, "/rest/*")
             javalinServer = Server(23442)
             javalinServer.handler = ctx
