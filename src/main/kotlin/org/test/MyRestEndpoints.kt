@@ -8,7 +8,9 @@ import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 
 /**
- * A demo REST endpoints called by [RestClient].
+ * A demo REST endpoints called by [RestClient]. To test tat everything works,
+ * run this from terminal: `curl http://localhost:8080/rest` - should print
+ * "Hello".
  */
 @WebServlet(
     urlPatterns = ["/rest/*"],
