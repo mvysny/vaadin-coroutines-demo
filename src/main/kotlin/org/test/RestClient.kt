@@ -1,7 +1,5 @@
 package org.test
 
-import com.vaadin.flow.server.VaadinRequest
-import com.vaadin.flow.server.VaadinServletRequest
 import kotlinx.coroutines.future.await
 import java.net.URI
 import java.net.http.HttpClient
