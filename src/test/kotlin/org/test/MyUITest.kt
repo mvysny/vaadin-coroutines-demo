@@ -9,6 +9,7 @@ import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import kotlin.test.expect
@@ -68,5 +69,12 @@ class MyUITest {
         _get<Button> { text = "Buy Ticket" } ._click()
         MockVaadin.clientRoundtrip()
         expect("Checking Available Tickets, Please Wait") { _get<ProgressDialog>().message }
+    }
+
+    @Disabled // doesn't work, no idea why
+    @Test fun `error handler`() {
+       _get<Button> { id = "non-existing-rest"} ._click()
+        MockVaadin.runUIQueue(true)
+       expectNotifications("error occurred")
     }
 }

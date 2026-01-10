@@ -18,11 +18,11 @@ class VaadinCoroutineSupportTest {
 
     private lateinit var coroutineScope: CoroutineScope
     @BeforeEach @Order(1) fun setupCoroutines() {
-        val uiCoroutineScope = SupervisorJob()
+        val jobs = SupervisorJob()
         val uiCoroutineContext = vaadin()
         coroutineScope = object : CoroutineScope {
             override val coroutineContext: CoroutineContext
-                get() = uiCoroutineContext + uiCoroutineScope
+                get() = uiCoroutineContext + jobs
         }
     }
 

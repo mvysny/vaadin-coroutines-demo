@@ -29,7 +29,7 @@ class MainRoute : KComposite(), CoroutineScope {
      * I must use the [SupervisorJob] here; regular [Job] would cancel itself if any of the child coroutines failed, and that would
      * prevent launching more coroutines.
      */
-    private val uiCoroutineScope = SupervisorJob()
+    private val supervisorJob = SupervisorJob()
     private val uiCoroutineContext = vaadin()
 
     @Transient
@@ -45,6 +45,10 @@ class MainRoute : KComposite(), CoroutineScope {
             }
             button("Close session (must cancel all ongoing jobs)") {
                 onClick { VaadinSession.getCurrent().close(); UI.getCurrent().page.reload() }
+            }
+            button("Test - call non-existing REST") {
+                setId("non-existing-rest")
+                onClick { launch { RestClient.nonExistingEndpoint() } }
             }
         }
     }
@@ -83,10 +87,10 @@ class MainRoute : KComposite(), CoroutineScope {
     }
 
     override val coroutineContext: CoroutineContext
-        get() = uiCoroutineContext + uiCoroutineScope
+        get() = uiCoroutineContext + supervisorJob
 
     override fun onDetach(detachEvent: DetachEvent) {
-        uiCoroutineScope.cancel()
+        supervisorJob.cancel()
         log.info("Canceled all coroutines started from the UI")
         super.onDetach(detachEvent)
     }

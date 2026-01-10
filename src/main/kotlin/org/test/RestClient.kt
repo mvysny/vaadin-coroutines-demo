@@ -36,6 +36,15 @@ object RestClient {
         val request = "http://localhost:$port/rest/tickets/purchase".httpPost()
         client.async(request)
     }
+
+    /**
+     * Calls a non-existing endpoint which should throw a 404 exception.
+     */
+    suspend fun nonExistingEndpoint() {
+        checkUIThread()
+        val request = "http://localhost:$port/rest/non-existing".httpPost()
+        client.async(request)
+    }
 }
 
 fun String.httpGet(): HttpRequest = HttpRequest.newBuilder(URI.create(this)).build()
