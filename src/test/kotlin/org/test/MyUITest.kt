@@ -44,11 +44,14 @@ class MyUITest {
 
     @Test fun `canceling purchase does nothing if the purchase is not ongoing`() {
         _get<Button> { text = "Cancel Purchase" } ._click()
+        MockVaadin.clientRoundtrip()
     }
 
     @Test fun `purchase ticket shows a dialog`() {
         _get<Button> { text = "Buy Ticket" } ._click()
-        expect("Checking Available Tickets, Please Wait") { _get<ProgressDialog>().message }
+        retry {
+            expect("Checking Available Tickets, Please Wait") { _get<ProgressDialog>().message }
+        }
     }
 
     @Test fun `purchase ticket shows a purchase confirmation dialog`() {
@@ -67,14 +70,19 @@ class MyUITest {
         }
         MockVaadin.runUIQueue(true)
         _get<Button> { text = "Buy Ticket" } ._click()
-        MockVaadin.clientRoundtrip()
-        expect("Checking Available Tickets, Please Wait") { _get<ProgressDialog>().message }
+        retry {
+            expect("Checking Available Tickets, Please Wait") { _get<ProgressDialog>().message }
+        }
     }
 
-    @Disabled // doesn't work, no idea why
     @Test fun `error handler`() {
        _get<Button> { id = "non-existing-rest"} ._click()
+       // click() submits the coroutine to Vaadin UI queue but nothig is done until the queue is actually ran.
         MockVaadin.runUIQueue(true)
-       expectNotifications("error occurred")
+        // now the coroutine submitted the HTTP request and suspended. We need to wait for the outcome of
+        // the HTTP call, then run the UI queue again. retry() runs the event queue.
+        retry(true) {
+            expectNotifications("Internal error: java.lang.IllegalStateException: Request http://localhost:23442/rest/non-existing POST failed with 404: Not Found")
+        }
     }
 }

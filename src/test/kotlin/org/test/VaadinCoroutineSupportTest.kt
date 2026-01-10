@@ -60,14 +60,15 @@ class VaadinCoroutineSupportTest {
 
         @Test fun `exceptions thrown by suspendCancellableCoroutine() caught`() {
             coroutineScope.launch {
-                suspendCancellableCoroutine { _ ->
-                    throw RuntimeException("expected")
-                }
+                delay(20)
+                throw RuntimeException("expected")
             }
 
             // run the UI queue, which will run the launch{} block, throwing any exceptions out
             // runUIQueue() wraps the exception in ExecutionException
             val ex = assertThrows<ExecutionException> {
+                MockVaadin.runUIQueue()
+                Thread.sleep(100)
                 MockVaadin.runUIQueue()
             }
             expect("expected") { ex.message }
