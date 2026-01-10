@@ -48,20 +48,16 @@ object RestClient {
 }
 
 fun String.httpGet(): HttpRequest = HttpRequest.newBuilder(URI.create(this)).build()
-fun String.httpPost(body: String = ""): HttpRequest = HttpRequest.newBuilder(URI.create(this)).POST(HttpRequest.BodyPublishers.ofString(body)).build()
+fun String.httpPost(body: String = ""): HttpRequest =
+    HttpRequest.newBuilder(URI.create(this)).POST(HttpRequest.BodyPublishers.ofString(body)).build()
 
 /**
  * Asynchronously processes given request and returns the response body. Fails if the server returns anything but 200.
  * @return the response body
  */
 suspend fun HttpClient.async(req: HttpRequest): String {
-    try {
-        val future: CompletableFuture<HttpResponse<String>> = sendAsync(req, BodyHandlers.ofString())
-        val response: HttpResponse<String> = future.await()
-        check(response.statusCode() == 200) { "Request $req failed with ${response.statusCode()}: ${response.body()}" }
-        return response.body()
-    } catch (t: Throwable) {
-        t.printStackTrace()
-        throw t
-    }
+    val future: CompletableFuture<HttpResponse<String>> = sendAsync(req, BodyHandlers.ofString())
+    val response: HttpResponse<String> = future.await()
+    check(response.statusCode() == 200) { "Request $req failed with ${response.statusCode()}: ${response.body()}" }
+    return response.body()
 }
